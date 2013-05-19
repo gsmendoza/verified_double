@@ -1,3 +1,4 @@
+*.geany
 *.gem
 *.rbc
 .bundle
@@ -8,6 +9,7 @@ InstalledFiles
 _yardoc
 coverage
 doc/
+gsmendoza/
 lib/bundler/man
 pkg
 rdoc
