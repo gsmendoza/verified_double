@@ -20,6 +20,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "rspec"
   gem.add_runtime_dependency "rspec-fire"
 
+  gem.add_development_dependency "aruba"
+  gem.add_development_dependency "cucumber"
   gem.add_development_dependency "pry"
   gem.add_development_dependency "activesupport"
 
