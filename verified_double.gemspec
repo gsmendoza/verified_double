@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = VerifiedDouble::VERSION
   gem.authors       = ["George Mendoza"]
   gem.email         = ["gsmendoza@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Contract tests for rspec}
+  gem.summary       = %q{VerifiedDouble would record any mock made in the test suite. It would then verify if the mock is valid by checking if there is a test against it.}
+  gem.homepage      = "https://www.relishapp.com/gsmendoza/verified-double"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
