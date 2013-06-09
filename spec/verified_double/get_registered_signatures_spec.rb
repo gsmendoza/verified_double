@@ -3,10 +3,10 @@ require 'verified_double/get_registered_signatures'
 
 describe VerifiedDouble::GetRegisteredSignatures do
   let(:method_signature_1) {
-    fire_double('VerifiedDouble::MethodSignature', to_s: 'method_signature_1') }
+    VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'to_s') }
 
   let(:method_signature_2) {
-    fire_double('VerifiedDouble::MethodSignature', to_s: 'method_signature_2') }
+    VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'inspect') }
 
   let(:recording_double_1) {
     fire_double('VerifiedDouble::RecordingDouble',
@@ -23,7 +23,7 @@ describe VerifiedDouble::GetRegisteredSignatures do
       let(:double_registry){ [recording_double_1, recording_double_2] }
 
       it "maps and flattens the method signatures of the recording doubles" do
-        expect(subject.execute).to eq(['method_signature_1', 'method_signature_2'])
+        expect(subject.execute).to eq([method_signature_1, method_signature_2])
       end
     end
 
@@ -35,7 +35,7 @@ describe VerifiedDouble::GetRegisteredSignatures do
       let(:double_registry){ [recording_double_1, recording_double_2] }
 
       it "returns distinct method signatures" do
-        expect(subject.execute).to eq(['method_signature_1'])
+        expect(subject.execute).to eq([method_signature_1])
       end
     end
   end

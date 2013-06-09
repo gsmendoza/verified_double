@@ -11,6 +11,7 @@ module VerifiedDouble
         .map{|example| example.metadata[:verifies_contract] }
         .compact
         .uniq
+        .map{|method_signature_string| ParseMethodSignature.new(method_signature_string).execute }
     end
   end
 end

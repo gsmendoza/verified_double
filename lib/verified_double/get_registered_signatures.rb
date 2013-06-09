@@ -5,7 +5,7 @@ module VerifiedDouble
     end
 
     def execute
-      @double_registry.map(&:method_signatures).flatten.map(&:to_s).uniq
+      @double_registry.map(&:method_signatures).flatten.uniq
     end
   end
 end

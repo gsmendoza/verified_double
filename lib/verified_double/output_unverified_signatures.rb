@@ -6,7 +6,7 @@ module VerifiedDouble
 
     def execute
       if unverified_signatures.any?
-        output = ["The following mocks are not verified:" ] + unverified_signatures
+        output = ["The following mocks are not verified:" ] + unverified_signatures.map(&:recommended_verified_signature)
         puts output.join("\n")
       end
     end

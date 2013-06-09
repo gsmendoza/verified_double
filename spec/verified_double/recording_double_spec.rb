@@ -104,7 +104,7 @@ describe VerifiedDouble::RecordingDouble do
       subject.should_receive(:to_s)
       subject.should_receive(:inspect)
 
-      expect(subject.method_signatures.map(&:method)).to eq([:to_s, :inspect])
+      expect(subject.method_signatures.map(&:method)).to eq(['to_s', 'inspect'])
 
       subject.to_s
       subject.inspect
@@ -115,7 +115,8 @@ describe VerifiedDouble::RecordingDouble do
     it "sets the args of the last method signature" do
       subject.should_receive(:to_s).with(:arg_1, :arg_2)
 
-      expect(subject.method_signatures[0].args).to eq([:arg_1, :arg_2])
+      expect(subject.method_signatures[0].args).to be_all{|arg| arg.is_a?(VerifiedDouble::MethodSignatureValue) }
+      expect(subject.method_signatures[0].args.map(&:value)).to eq([:arg_1, :arg_2])
 
       subject.to_s(:arg_1, :arg_2)
     end
@@ -125,7 +126,10 @@ describe VerifiedDouble::RecordingDouble do
     it "sets the return value of the last method signature" do
       subject.should_receive(:to_s).with(:arg_1, :arg_2).and_return(:return_value)
 
-      expect(subject.method_signatures[0].return_value).to eq(:return_value)
+      return_values = subject.method_signatures[0].return_values
+      expect(return_values).to have(1).return_value
+      expect(return_values.first).to be_a(VerifiedDouble::MethodSignatureValue)
+      expect(return_values.first.value).to eq(:return_value)
 
       subject.to_s(:arg_1, :arg_2)
     end
