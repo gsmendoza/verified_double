@@ -1,5 +1,7 @@
 # VerifiedDouble
 
+[![Build Status](https://travis-ci.org/gsmendoza/verified_double.png)](https://travis-ci.org/gsmendoza/verified_double)
+
 VerifiedDouble would record any mock made in the test suite. It
 would then verify if the mock is valid by checking if there is a test
 against it.
