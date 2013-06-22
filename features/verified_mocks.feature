@@ -1,4 +1,4 @@
-Feature: Verified double
+Feature: Verified mocks
   As a developer
   I want to be informed if the mocks I use are verified by contract tests
 
