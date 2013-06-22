@@ -2,9 +2,12 @@ require 'delegate'
 
 module VerifiedDouble
   class RecordingDouble < ::SimpleDelegator
-    def initialize(double)
+    def initialize(double, method_stubs={})
       @double = double
       super(@double)
+      method_stubs.each do |method, output|
+        self.stub(method).and_return(output)
+      end
     end
 
     def and_return(return_value)
@@ -38,12 +41,13 @@ module VerifiedDouble
     end
 
     def should_receive(method)
-      method_signature = MethodSignature.new(
-        class_name: class_name,
-        method_operator: method_operator,
-        method: method.to_s)
+      add_method_signature method
+      @double_call = super(method)
+      self
+    end
 
-      self.method_signatures << method_signature
+    def stub(method)
+      add_method_signature method
       @double_call = super(method)
       self
     end
@@ -57,6 +61,17 @@ module VerifiedDouble
         args.map{|arg| MethodSignatureValue.new(arg) }
       @double_call.with(*args)
       self
+    end
+
+    private
+
+    def add_method_signature(method)
+      method_signature = MethodSignature.new(
+        class_name: class_name,
+        method_operator: method_operator,
+        method: method.to_s)
+
+      self.method_signatures << method_signature
     end
   end
 end

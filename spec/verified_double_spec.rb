@@ -13,7 +13,7 @@ describe VerifiedDouble do
     end
   end
 
-  describe ".of_instance(class_name)" do
+  describe ".of_instance(class_name, method_stubs={})" do
     let(:class_name){ 'Object' }
 
     let(:subject) { described_class.of_instance(class_name) }
@@ -28,6 +28,17 @@ describe VerifiedDouble do
       described_class.registry.clear
       recording_double = subject
       expect(described_class.registry).to eq([recording_double])
+    end
+
+    context "with method_stubs hash" do
+      let(:stubbed_method){ :some_method }
+      let(:assumed_output){ :some_output }
+
+      subject { described_class.of_instance(class_name, some_method: assumed_output) }
+      
+      it "stubs the methods of the instance" do
+        expect(subject.send(stubbed_method)).to eq(assumed_output)
+      end
     end
   end
 
@@ -47,6 +58,17 @@ describe VerifiedDouble do
       described_class.registry.clear
       recording_double = subject
       expect(described_class.registry).to eq([recording_double])
+    end
+
+    context "with methods hash" do
+      let(:stubbed_method){ :some_method }
+      let(:assumed_output){ :some_output }
+
+      subject { described_class.of_class(class_name, some_method: assumed_output) }
+      
+      it "stubs the methods of the class" do
+        expect(subject.send(stubbed_method)).to eq(assumed_output)
+      end
     end
   end
 end

@@ -10,11 +10,19 @@ Given /^a test that uses VerifiedDouble to mock an object:$/ do |string|
   write_file 'spec/main_spec.rb', string
 end
 
+Given /^a test that uses VerifiedDouble to stub an object:$/ do |string|
+  write_file 'spec/main_spec.rb', string
+end
+
 Given /^a test that uses VerifiedDouble to mock a class:$/ do |string|
   write_file 'spec/main_spec.rb', string
 end
 
 Given /^the test suite has a contract test for the mock:$/ do |string|
+  write_file 'spec/contract_test_for_main_spec.rb', string
+end
+
+Given /^the test suite has a contract test for the stub:$/ do |string|
   write_file 'spec/contract_test_for_main_spec.rb', string
 end
 
@@ -32,6 +40,11 @@ Then /^I should be informed that the mock is unverified:$/ do |string|
 end
 
 Then /^I should not see any output saying the mock is unverified$/ do
+  assert_no_partial_output("The following mocks are not verified", all_output)
+  assert_success('pass')
+end
+
+Then /^I should not see any output saying the stub is unverified$/ do
   assert_no_partial_output("The following mocks are not verified", all_output)
   assert_success('pass')
 end

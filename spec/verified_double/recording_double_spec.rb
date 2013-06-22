@@ -11,6 +11,17 @@ describe VerifiedDouble::RecordingDouble do
     it "requires a double" do
       expect(subject.double).to eq(internal_double)
     end
+
+    context "with method_stubs hash" do
+      let(:stubbed_method){ :some_method }
+      let(:assumed_output){ :some_output }
+
+      subject { VerifiedDouble::RecordingDouble.new(internal_double, some_method: assumed_output) }
+
+      it "stubs the methods of the instance" do
+        expect(subject.send(stubbed_method)).to eq(assumed_output)
+      end
+    end
   end
 
   it "delegates all unknown calls to its internal double" do
@@ -108,6 +119,17 @@ describe VerifiedDouble::RecordingDouble do
 
       subject.to_s
       subject.inspect
+    end
+  end
+
+  describe "#stub(method)" do
+    it "appends a new method signature with the method to the recording double's method signatures" do
+      expect(subject.method_signatures).to be_empty
+
+      subject.stub(:to_s)
+      subject.stub(:inspect)
+
+      expect(subject.method_signatures.map(&:method)).to eq(['to_s', 'inspect'])
     end
   end
 
