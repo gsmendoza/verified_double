@@ -1,7 +1,13 @@
 require 'delegate'
+require 'verified_double/relays_to_internal_double_returning_self'
 
 module VerifiedDouble
   class RecordingDouble < ::SimpleDelegator
+    extend VerifiedDouble::RelaysToInternalDoubleReturningSelf
+
+    relays_to_internal_double_returning_self :any_number_of_times, :and_raise,
+      :and_throw, :at_least, :at_most, :exactly, :once, :twice
+    
     def initialize(double, method_stubs={})
       @double = double
       super(@double)

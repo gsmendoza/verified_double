@@ -156,4 +156,55 @@ describe VerifiedDouble::RecordingDouble do
       subject.to_s(:arg_1, :arg_2)
     end
   end
+
+  describe "#once" do
+    it "is relayed to the internal double and returns the recording double" do
+      expect(subject.should_receive(:to_s).once).to be_a(described_class)
+      subject.to_s
+    end
+  end
+
+  describe "#twice" do
+    it "is relayed to the internal double and returns the recording double" do
+      expect(subject.should_receive(:to_s).twice).to be_a(described_class)
+      subject.to_s
+      subject.to_s
+    end
+  end
+
+  describe "#at_least" do
+    it "is relayed to the internal double and returns the recording double" do
+      expect(subject.should_receive(:to_s).at_least(:once)).to be_a(described_class)
+      subject.to_s
+    end
+  end
+
+  describe "#at_most" do
+    it "is relayed to the internal double and returns the recording double" do
+      expect(subject.should_receive(:to_s).at_most(:once)).to be_a(described_class)
+      subject.to_s
+    end
+  end
+
+  describe "#any_number_of_times" do
+    it "is relayed to the internal double and returns the recording double" do
+      expect(subject.should_receive(:to_s).any_number_of_times).to be_a(described_class)
+    end
+  end
+
+  describe "#and_raise" do
+    let(:some_error){ Exception.new }
+    
+    it "is relayed to the internal double and returns the recording double" do
+      expect(subject.should_receive(:to_s).and_raise(some_error)).to be_a(described_class)
+      expect { subject.to_s }.to raise_error(some_error)
+    end
+  end
+
+  describe "#and_raise" do
+    it "is relayed to the internal double and returns the recording double" do
+      expect(subject.should_receive(:to_s).and_throw(:some_error)).to be_a(described_class)
+      expect { subject.to_s }.to throw_symbol(:some_error)
+    end
+  end
 end
