@@ -2,6 +2,10 @@ Given /^the following classes:$/ do |string|
   write_file 'lib/main.rb', string
 end
 
+Given /^the test suite includes VerifiedDouble to verify doubles with accessor methods:$/ do |string|
+  write_file 'spec/spec_helper.rb', string
+end
+
 Given /^the test suite has an after\(:suite\) callback asking VerifiedDouble to report unverified doubles:$/ do |string|
   write_file 'spec/spec_helper.rb', string
 end

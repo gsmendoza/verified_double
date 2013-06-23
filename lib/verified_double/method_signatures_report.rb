@@ -1,17 +1,25 @@
 module VerifiedDouble
   class MethodSignaturesReport
-    attr_accessor :registered_signatures, :verified_signatures_from_tags, :unverified_signatures
+    attr_accessor :registered_signatures,  :unverified_signatures, :verified_signatures,
+      :verified_signatures_from_tags,:verified_signatures_from_matchers
 
     def initialize
       @registered_signatures = []
-      @verified_signatures_from_tags = []
       @unverified_signatures = []
+      @verified_signatures = []
+      @verified_signatures_from_tags = []
+      @verified_signatures_from_matchers = []
     end
 
     def identify_unverified_signatures
       @unverified_signatures = @registered_signatures.select{|registered_signature|
-       @verified_signatures_from_tags.all?{|verified_signature|
+       @verified_signatures.all?{|verified_signature|
         ! registered_signature.accepts?(verified_signature) } }
+      self
+    end
+
+    def merge_verified_signatures
+      @verified_signatures = @verified_signatures_from_tags + @verified_signatures_from_matchers
       self
     end
 
@@ -24,6 +32,11 @@ module VerifiedDouble
     
     def set_registered_signatures
       @registered_signatures = VerifiedDouble.registry.map(&:method_signatures).flatten.uniq
+      self
+    end
+
+    def set_verified_signatures_from_matchers
+      @verified_signatures_from_matchers = VerifiedDouble.verified_signatures_from_matchers
       self
     end
 

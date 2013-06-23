@@ -3,9 +3,9 @@ require 'verified_double'
 
 describe VerifiedDouble do
   describe ".registry" do
-    it "is a array by default" do
+    it "is an empty array by default" do
       registry = VerifiedDouble.registry
-      expect(registry).to be_a(Array)
+      expect(registry).to eq([])
     end
 
     it "is memoized" do
@@ -13,10 +13,25 @@ describe VerifiedDouble do
     end
   end
 
+  describe ".verified_signatures_from_matchers" do
+    it "is an empty array by default" do
+      verified_signatures_from_matchers = VerifiedDouble.verified_signatures_from_matchers
+      expect(verified_signatures_from_matchers).to eq([])
+    end
+
+    it "is memoized" do
+      expect(VerifiedDouble.verified_signatures_from_matchers).to equal(VerifiedDouble.verified_signatures_from_matchers)
+    end
+  end
+
   describe ".of_instance(class_name, method_stubs={})" do
     let(:class_name){ 'Object' }
 
     let(:subject) { described_class.of_instance(class_name) }
+
+    after :each do
+      VerifiedDouble.registry.clear
+    end
 
     it "creates an instance recording double" do
       expect(subject).to be_a(VerifiedDouble::RecordingDouble)
@@ -46,6 +61,10 @@ describe VerifiedDouble do
     let(:class_name){ 'Object' }
 
     let(:subject) { described_class.of_class(class_name) }
+
+    after :each do
+      VerifiedDouble.registry.clear
+    end
 
     it "creates a class recording double" do
       expect(subject).to be_a(VerifiedDouble::RecordingDouble)
@@ -86,22 +105,19 @@ describe VerifiedDouble do
 
       method_signatures_report_class.should_receive(:new).and_return(method_signatures_report)
 
-      method_signatures_report
-        .should_receive(:set_registered_signatures)
-        .and_return(method_signatures_report)
-        
-      method_signatures_report
-        .should_receive(:set_verified_signatures_from_tags)
-        .with(nested_example_group)
-        .and_return(method_signatures_report)
+      actions = [
+        :set_registered_signatures,
+        :set_verified_signatures_from_tags,
+        :set_verified_signatures_from_matchers,
+        :merge_verified_signatures,
+        :identify_unverified_signatures,
+        :output_unverified_signatures]
 
-      method_signatures_report
-        .should_receive(:identify_unverified_signatures)
-        .and_return(method_signatures_report)
-
-      method_signatures_report
-        .should_receive(:output_unverified_signatures)
-        .and_return(method_signatures_report)
+      actions.each do |action|
+        method_signatures_report
+          .should_receive(action)
+          .and_return(method_signatures_report)
+      end
 
       described_class.report_unverified_signatures(nested_example_group)
     end

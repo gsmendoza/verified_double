@@ -1,6 +1,7 @@
 require 'rspec/fire'
 
 require 'verified_double/boolean'
+require 'verified_double/matchers'
 require 'verified_double/method_signature'
 require 'verified_double/method_signature_value'
 require 'verified_double/method_signatures_report'
@@ -31,8 +32,14 @@ module VerifiedDouble
     MethodSignaturesReport.new
       .set_registered_signatures
       .set_verified_signatures_from_tags(nested_example_group)
+      .set_verified_signatures_from_matchers
+      .merge_verified_signatures
       .identify_unverified_signatures
       .output_unverified_signatures
+  end
+
+  def self.verified_signatures_from_matchers
+    @verified_signatures_from_matchers ||= []
   end
 end
 

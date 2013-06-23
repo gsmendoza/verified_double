@@ -14,6 +14,18 @@ module VerifiedDouble
       end
     end
 
+    def as_instance
+      if self.value.is_a?(Class)
+        begin
+          value.new
+        rescue NoMethodError
+          Object.new
+        end
+      else
+        self.value
+      end
+    end
+
     def modified_class
       if value == true or value == false
         VerifiedDouble::Boolean

@@ -130,10 +130,11 @@ describe VerifiedDouble::MethodSignaturesReport do
       expect(registered_signature_without_match.accepts?(verified_signature)).to be_false
 
       subject.registered_signatures = [registered_signature, registered_signature_without_match]
-      subject.verified_signatures_from_tags = [verified_signature]
+      subject.verified_signatures = [verified_signature]
 
-      expect(subject.identify_unverified_signatures.unverified_signatures)
-        .to eq([registered_signature_without_match])
+      expect(subject.unverified_signatures).to be_empty
+      subject.identify_unverified_signatures
+      expect(subject.unverified_signatures).to eq([registered_signature_without_match])
     end
   end
 
@@ -175,6 +176,36 @@ describe VerifiedDouble::MethodSignaturesReport do
         subject.should_receive(:puts).with(lines.join("\n"))
         subject.output_unverified_signatures
       end
+    end
+  end
+
+  describe "#set_verified_signatures_from_matchers" do
+    let(:verified_double_module){
+      fire_class_double('VerifiedDouble')
+        .as_replaced_constant(transfer_nested_constants: true) }
+
+    let(:method_signature) { VerifiedDouble::MethodSignature.new }
+
+    it "works" do
+      verified_double_module
+        .should_receive(:verified_signatures_from_matchers)
+        .and_return([method_signature])
+      
+      expect(subject.set_verified_signatures_from_matchers.verified_signatures_from_matchers)
+        .to eq([method_signature])
+    end
+  end
+
+  describe "#merge_verified_signatures" do
+    let(:method_signature_from_tag) { VerifiedDouble::MethodSignature.new }
+    let(:method_signature_from_matcher) { VerifiedDouble::MethodSignature.new }
+
+    it "merges the verified signatures from the tags and the matchers" do
+      subject.verified_signatures_from_tags = [method_signature_from_tag]
+      subject.verified_signatures_from_matchers = [method_signature_from_matcher]
+
+      expect(subject.verified_signatures).to be_empty
+      expect(subject.merge_verified_signatures.verified_signatures).to eq([method_signature_from_tag, method_signature_from_matcher])
     end
   end
 end

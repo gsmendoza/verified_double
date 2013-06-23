@@ -79,4 +79,30 @@ describe VerifiedDouble::MethodSignatureValue do
       expect(subject.recommended_value.value).to_not eq(subject)
     end
   end
+
+  describe "#as_instance" do
+    context "where the value is an instance" do
+      subject { described_class.new(:some_value) }
+      
+      it "returns the value" do
+        expect(subject.as_instance).to eq(:some_value)
+      end
+    end
+
+    context "where the value is a class which can be initialized" do
+      subject { described_class.new(String) }
+
+      it "returns the initialized instance of the value " do
+        expect(subject.as_instance).to eq(String.new)
+      end
+    end
+
+    context "where the value is a class which cannot be initialized" do
+      subject { described_class.new(Integer) }
+      
+      it "returns an object" do
+        expect(subject.as_instance).to be_an(Object)
+      end
+    end
+  end
 end
