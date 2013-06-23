@@ -32,13 +32,12 @@ Feature: Verified mocks
 
     And the test suite has an after(:suite) callback asking VerifiedDouble to report unverified doubles:
       """
-      require 'pry'
       require 'verified_double'
       require 'main'
 
       RSpec.configure do |config|
         config.after :suite do
-          VerifiedDouble::ReportUnverifiedSignatures.new(VerifiedDouble.registry, self).execute
+          VerifiedDouble.report_unverified_signatures(self)
         end
       end
       """

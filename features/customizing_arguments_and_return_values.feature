@@ -24,7 +24,7 @@ Feature: Customizing arguments and return values
 
       RSpec.configure do |config|
         config.after :suite do
-          VerifiedDouble::ReportUnverifiedSignatures.new(VerifiedDouble.registry, self).execute
+          VerifiedDouble.report_unverified_signatures(self)
         end
       end
       """

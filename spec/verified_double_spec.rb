@@ -71,4 +71,39 @@ describe VerifiedDouble do
       end
     end
   end
+
+  describe ".report_unverified_signatures" do
+    let(:nested_example_group) { double('nested_example_group') }
+    let(:method_signatures_report) { fire_double('VerifiedDouble::MethodSignaturesReport') }
+    let(:method_signatures_report_class) {
+      fire_class_double('VerifiedDouble::MethodSignaturesReport').as_replaced_constant }
+    
+    
+    it "builds a method signatures report, determines unverified signatures, and ouputs them" do
+      nested_example_group
+        .stub_chain(:class, :descendant_filtered_examples)
+        .and_return([])
+
+      method_signatures_report_class.should_receive(:new).and_return(method_signatures_report)
+
+      method_signatures_report
+        .should_receive(:set_registered_signatures)
+        .and_return(method_signatures_report)
+        
+      method_signatures_report
+        .should_receive(:set_verified_signatures_from_tags)
+        .with(nested_example_group)
+        .and_return(method_signatures_report)
+
+      method_signatures_report
+        .should_receive(:identify_unverified_signatures)
+        .and_return(method_signatures_report)
+
+      method_signatures_report
+        .should_receive(:output_unverified_signatures)
+        .and_return(method_signatures_report)
+
+      described_class.report_unverified_signatures(nested_example_group)
+    end
+  end
 end
