@@ -7,9 +7,13 @@ module VerifiedDouble
 
     relays_to_internal_double_returning_self :any_number_of_times, :and_raise,
       :and_throw, :at_least, :at_most, :exactly, :once, :twice
-    
-    def initialize(double, method_stubs={})
+
+    attr_reader :class_name
+
+    def initialize(double, class_name, method_stubs={})
       @double = double
+      @class_name = class_name
+
       super(@double)
       method_stubs.each do |method, output|
         self.stub(method).and_return(output)
@@ -23,11 +27,7 @@ module VerifiedDouble
     end
 
     def class_double?
-      ! double.is_a?(RSpec::Fire::FireObjectDouble)
-    end
-
-    def class_name
-      double.instance_variable_get('@name')
+      ! double.is_a?(RSpec::Mocks::Mock)
     end
 
     def double
@@ -48,13 +48,13 @@ module VerifiedDouble
 
     def should_receive(method)
       add_method_signature method
-      @double_call = super(method)
+      @double_call = double.should_receive(method)
       self
     end
 
     def stub(method)
       add_method_signature method
-      @double_call = super(method)
+      @double_call = double.stub(method)
       self
     end
 

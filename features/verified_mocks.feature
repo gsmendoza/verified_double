@@ -10,8 +10,8 @@ Feature: Verified mocks
           collaborator.some_method(input)
         end
 
-        def self.do_something(collaborator, input)
-          collaborator.some_method(input)
+        def self.do_something(input)
+          Collaborator.some_method(input)
         end
       end
 
@@ -107,7 +107,7 @@ Feature: Verified mocks
 
         it "tests something" do
           class_double.should_receive(:some_method).with(input).and_return(output)
-          ObjectUnderTest.new.do_something(class_double, input)
+          ObjectUnderTest.do_something(input)
         end
       end
       """

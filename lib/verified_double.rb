@@ -1,4 +1,4 @@
-require 'rspec/fire'
+require 'rspec/mocks'
 
 require 'verified_double/boolean'
 require 'verified_double/matchers'
@@ -10,16 +10,17 @@ require 'verified_double/recording_double'
 require 'verified_double/relays_to_internal_double_returning_self'
 
 module VerifiedDouble
+  extend RSpec::Mocks::ExampleMethods
+
   def self.of_class(class_name, method_stubs = {})
-    class_double = RSpec::Fire::FireClassDoubleBuilder.build(class_name).as_replaced_constant
-    RecordingDouble.new(class_double, method_stubs).tap do |double|
+    class_double = stub_const(class_name, Class.new, transfer_nested_constants: true)
+    RecordingDouble.new(class_double, class_name, method_stubs).tap do |double|
       registry << double
     end
   end
 
   def self.of_instance(class_name, method_stubs = {})
-    instance_double = RSpec::Fire::FireObjectDouble.new(class_name)
-    RecordingDouble.new(instance_double, method_stubs).tap do |double|
+    RecordingDouble.new(double(class_name), class_name, method_stubs).tap do |double|
       registry << double
     end
   end

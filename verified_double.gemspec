@@ -18,11 +18,11 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_runtime_dependency "rspec"
-  gem.add_runtime_dependency "rspec-fire", '~> 1.1.3'
 
   gem.add_development_dependency "aruba"
   gem.add_development_dependency "cucumber"
   gem.add_development_dependency "pry"
   gem.add_development_dependency "activesupport"
+  gem.add_development_dependency "rspec-fire", '~> 1.1.3'
 
 end
