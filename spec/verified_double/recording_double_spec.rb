@@ -56,7 +56,7 @@ describe VerifiedDouble::RecordingDouble do
 
   describe "#class_name" do
     context "where the internal double is a double" do
-      it "is the name of the class represented by the FireObjectDouble" do
+      it "is the name of the class represented by the double" do
         internal_double = double('Object')
         subject = described_class.new(internal_double, 'Object')
         expect(subject.class_name).to eq('Object')
@@ -64,7 +64,7 @@ describe VerifiedDouble::RecordingDouble do
     end
 
     context "where the internal double is a stub const" do
-      it "is the name of the class represented by the rspec fire class double" do
+      it "is the name of the class represented by the class double" do
         internal_double = stub_const('Object', Class.new)
         subject = described_class.new(internal_double, 'Object')
         expect(subject.class_name).to eq('Object')
@@ -73,13 +73,13 @@ describe VerifiedDouble::RecordingDouble do
   end
 
   describe "#class_double?" do
-    it "should be true if the internal double is an rspec fire class double" do
+    it "should be true if the internal double is a class double" do
       internal_double = double('Object')
       subject = described_class.new(internal_double, 'Object')
       expect(subject).to_not be_class_double
     end
 
-    it "should be false if the internal double is not an rspec fire class double" do
+    it "should be false if the internal double is not an class double" do
       internal_double = stub_const('Object', Class.new)
       subject = described_class.new(internal_double, 'Object')
       expect(subject).to be_class_double
@@ -88,7 +88,7 @@ describe VerifiedDouble::RecordingDouble do
 
   describe "#method_operator" do
     context "when the subject wraps an instance double" do
-      let(:internal_double) { fire_double('Object') }
+      let(:internal_double) { double(class_name) }
 
       subject { VerifiedDouble::RecordingDouble.new(internal_double, class_name) }
 
@@ -98,7 +98,7 @@ describe VerifiedDouble::RecordingDouble do
     end
 
     context "when the subject wraps a class double" do
-      let(:internal_double) { fire_class_double('Object') }
+      let(:internal_double) { stub_const(class_name, Class.new) }
 
       subject { VerifiedDouble::RecordingDouble.new(internal_double, class_name) }
 

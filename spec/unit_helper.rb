@@ -1,6 +1,5 @@
 require 'active_support/core_ext/string'
 require 'pry'
-require 'rspec/fire'
 
 require 'verified_double/boolean'
 
@@ -14,5 +13,4 @@ require "verified_double/method_signature_value"
 require 'verified_double/relays_to_internal_double_returning_self'
 
 RSpec.configure do |config|
-  config.include(RSpec::Fire)
 end

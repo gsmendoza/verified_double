@@ -3,9 +3,9 @@ require 'verified_double'
 
 describe VerifiedDouble do
   describe ".registry" do
-    it "is an empty array by default" do
+    it "is a array" do
       registry = VerifiedDouble.registry
-      expect(registry).to eq([])
+      expect(registry).to be_an(Array)
     end
 
     it "is memoized" do
@@ -14,9 +14,9 @@ describe VerifiedDouble do
   end
 
   describe ".verified_signatures_from_matchers" do
-    it "is an empty array by default" do
+    it "is an array" do
       verified_signatures_from_matchers = VerifiedDouble.verified_signatures_from_matchers
-      expect(verified_signatures_from_matchers).to eq([])
+      expect(verified_signatures_from_matchers).to be_an(Array)
     end
 
     it "is memoized" do
@@ -50,7 +50,7 @@ describe VerifiedDouble do
       let(:assumed_output){ :some_output }
 
       subject { described_class.of_instance(class_name, some_method: assumed_output) }
-      
+
       it "stubs the methods of the instance" do
         expect(subject.send(stubbed_method)).to eq(assumed_output)
       end
@@ -84,7 +84,7 @@ describe VerifiedDouble do
       let(:assumed_output){ :some_output }
 
       subject { described_class.of_class(class_name, some_method: assumed_output) }
-      
+
       it "stubs the methods of the class" do
         expect(subject.send(stubbed_method)).to eq(assumed_output)
       end
@@ -93,11 +93,11 @@ describe VerifiedDouble do
 
   describe ".report_unverified_signatures" do
     let(:nested_example_group) { double('nested_example_group') }
-    let(:method_signatures_report) { fire_double('VerifiedDouble::MethodSignaturesReport') }
+    let(:method_signatures_report) { VerifiedDouble.of_instance('VerifiedDouble::MethodSignaturesReport') }
     let(:method_signatures_report_class) {
-      fire_class_double('VerifiedDouble::MethodSignaturesReport').as_replaced_constant }
-    
-    
+      VerifiedDouble.of_class('VerifiedDouble::MethodSignaturesReport') }
+
+
     it "builds a method signatures report, determines unverified signatures, and ouputs them" do
       nested_example_group
         .stub_chain(:class, :descendant_filtered_examples)

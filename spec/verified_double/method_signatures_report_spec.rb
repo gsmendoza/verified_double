@@ -5,11 +5,11 @@ require 'verified_double/method_signatures_report'
 describe VerifiedDouble::MethodSignaturesReport do
   describe "#set_registered_signatures" do
     let(:recording_double_1) {
-      fire_double('VerifiedDouble::RecordingDouble',
+      double('VerifiedDouble::RecordingDouble',
         method_signatures: [method_signature_1]) }
 
     let(:recording_double_2) {
-      fire_double('VerifiedDouble::RecordingDouble',
+      double('VerifiedDouble::RecordingDouble',
         method_signatures: [method_signature_2]) }
 
     let(:method_signature_1) {
@@ -18,8 +18,7 @@ describe VerifiedDouble::MethodSignaturesReport do
     let(:method_signature_2) {
       VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'inspect') }
 
-    let(:verified_double_module){ fire_class_double('VerifiedDouble')
-      .as_replaced_constant(transfer_nested_constants: true) }
+    let(:verified_double_module){ VerifiedDouble.of_class('VerifiedDouble') }
 
     context "with multiple recording doubles in the registry" do
       it "maps and flattens the method signatures of the recording doubles" do
@@ -34,7 +33,7 @@ describe VerifiedDouble::MethodSignaturesReport do
 
     context "with recording doubles with duplicate signatures" do
       let(:recording_double_2) {
-        fire_double('VerifiedDouble::RecordingDouble',
+        double('VerifiedDouble::RecordingDouble',
           method_signatures: [method_signature_1]) }
 
       it "returns distinct method signatures" do
@@ -53,10 +52,10 @@ describe VerifiedDouble::MethodSignaturesReport do
     let(:nested_example_group){ double(:nested_example_group) }
 
     let(:parse_method_signature_service) {
-      fire_double('VerifiedDouble::ParseMethodSignature') }
+      VerifiedDouble.of_instance('VerifiedDouble::ParseMethodSignature') }
 
     let(:parse_method_signature_service_class) {
-      fire_class_double('VerifiedDouble::ParseMethodSignature').as_replaced_constant }
+      VerifiedDouble.of_class('VerifiedDouble::ParseMethodSignature') }
 
     let(:example_with_verified_contract_tag){
       double(:example_with_verified_contract_tag,
@@ -181,8 +180,7 @@ describe VerifiedDouble::MethodSignaturesReport do
 
   describe "#set_verified_signatures_from_matchers" do
     let(:verified_double_module){
-      fire_class_double('VerifiedDouble')
-        .as_replaced_constant(transfer_nested_constants: true) }
+      VerifiedDouble.of_class('VerifiedDouble') }
 
     let(:method_signature) { VerifiedDouble::MethodSignature.new }
 
@@ -190,7 +188,7 @@ describe VerifiedDouble::MethodSignaturesReport do
       verified_double_module
         .should_receive(:verified_signatures_from_matchers)
         .and_return([method_signature])
-      
+
       expect(subject.set_verified_signatures_from_matchers.verified_signatures_from_matchers)
         .to eq([method_signature])
     end
