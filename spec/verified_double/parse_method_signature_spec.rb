@@ -4,7 +4,11 @@ require 'verified_double/parse_method_signature'
 describe VerifiedDouble::ParseMethodSignature do
   subject { described_class.new(string) }
 
-  describe "#execute" do
+  describe "#initialize", verifies_contract: 'VerifiedDouble::ParseMethodSignature.new(String)=>VerifiedDouble::ParseMethodSignature' do
+    it { expect(described_class.new("Class#method(:arg_1, :arg_2)=>:return_value")).to be_a(VerifiedDouble::ParseMethodSignature) }
+  end
+
+  describe "#execute", verifies_contract: 'VerifiedDouble::ParseMethodSignature#execute()=>VerifiedDouble::MethodSignature' do
     let(:string){ "Class#method(:arg_1, :arg_2)=>:return_value" }
 
     subject { described_class.new(string).execute }

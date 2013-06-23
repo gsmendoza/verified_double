@@ -4,10 +4,6 @@ require 'verified_double/matchers'
 describe VerifiedDouble::Matchers do
   include VerifiedDouble::Matchers
 
-  after :each do
-    VerifiedDouble.verified_signatures_from_matchers.clear
-  end
-
   describe "#verify_accessor_contract(contract)" do
     class Collaborator
       attr_accessor :value
@@ -18,12 +14,8 @@ describe VerifiedDouble::Matchers do
     subject { Collaborator.new }
 
     it "adds the method signature to the verified signatures from matchers" do
-      expect(VerifiedDouble.verified_signatures_from_matchers).to be_empty
-
       expect(subject).to verify_accessor_contract(contract)
-
-      expect(VerifiedDouble.verified_signatures_from_matchers).to have(1).method_signature
-      expect(VerifiedDouble.verified_signatures_from_matchers[0].to_s).to eq(contract)
+      expect(VerifiedDouble.verified_signatures_from_matchers.last.to_s).to eq(contract)
     end
 
     context "where the contract has multiple return values" do
@@ -88,12 +80,8 @@ describe VerifiedDouble::Matchers do
     end
 
     it "adds the method signature to the verified signatures from matchers" do
-      expect(VerifiedDouble.verified_signatures_from_matchers).to be_empty
-
       expect(subject).to verify_reader_contract(contract)
-
-      expect(VerifiedDouble.verified_signatures_from_matchers).to have(1).method_signature
-      expect(VerifiedDouble.verified_signatures_from_matchers[0].to_s).to eq(contract)
+      expect(VerifiedDouble.verified_signatures_from_matchers.last.to_s).to eq(contract)
     end
 
     context "where the contract has multiple return values" do

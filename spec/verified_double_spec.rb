@@ -3,7 +3,7 @@ require 'verified_double'
 
 describe VerifiedDouble do
   describe ".registry" do
-    it "is a array" do
+    it "is a array", verifies_contract: 'VerifiedDouble.registry()=>Array' do
       registry = VerifiedDouble.registry
       expect(registry).to be_an(Array)
     end
@@ -14,7 +14,7 @@ describe VerifiedDouble do
   end
 
   describe ".verified_signatures_from_matchers" do
-    it "is an array" do
+    it "is an array", verifies_contract: 'VerifiedDouble.verified_signatures_from_matchers()=>Array' do
       verified_signatures_from_matchers = VerifiedDouble.verified_signatures_from_matchers
       expect(verified_signatures_from_matchers).to be_an(Array)
     end
@@ -29,10 +29,6 @@ describe VerifiedDouble do
 
     let(:subject) { described_class.of_instance(class_name) }
 
-    after :each do
-      VerifiedDouble.registry.clear
-    end
-
     it "creates an instance recording double" do
       expect(subject).to be_a(VerifiedDouble::RecordingDouble)
       expect(subject).to_not be_class_double
@@ -40,12 +36,11 @@ describe VerifiedDouble do
     end
 
     it "adds the double to the registry" do
-      described_class.registry.clear
       recording_double = subject
-      expect(described_class.registry).to eq([recording_double])
+      expect(described_class.registry.last).to eq(recording_double)
     end
 
-    context "with method_stubs hash" do
+    context "with method_stubs hash", verifies_contract: 'Object#some_method()=>Symbol' do
       let(:stubbed_method){ :some_method }
       let(:assumed_output){ :some_output }
 
@@ -62,10 +57,6 @@ describe VerifiedDouble do
 
     let(:subject) { described_class.of_class(class_name) }
 
-    after :each do
-      VerifiedDouble.registry.clear
-    end
-
     it "creates a class recording double" do
       expect(subject).to be_a(VerifiedDouble::RecordingDouble)
       expect(subject).to be_class_double
@@ -74,12 +65,11 @@ describe VerifiedDouble do
     end
 
     it "adds the double to the registry" do
-      described_class.registry.clear
       recording_double = subject
-      expect(described_class.registry).to eq([recording_double])
+      expect(described_class.registry.last).to eq(recording_double)
     end
 
-    context "with methods hash" do
+    context "with methods hash", verifies_contract: 'Object.some_method()=>Symbol' do
       let(:stubbed_method){ :some_method }
       let(:assumed_output){ :some_output }
 

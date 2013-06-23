@@ -27,7 +27,9 @@ module VerifiedDouble
     end
 
     def modified_class
-      if value == true or value == false
+      if value.is_a?(VerifiedDouble::RecordingDouble)
+        value.class_name.constantize
+      elsif value == true or value == false
         VerifiedDouble::Boolean
       else
         value.class

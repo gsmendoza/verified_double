@@ -53,6 +53,15 @@ describe VerifiedDouble::MethodSignatureValue do
   describe "#modified_class" do
     subject { method_signature_value.modified_class }
 
+    context "where the value is recording double" do
+      let(:recording_double){ VerifiedDouble.of_instance('Object') }
+      let(:method_signature_value) { described_class.new(recording_double) }
+
+      it "is the class represented by the class_name of the recording double" do
+        expect(subject).to eq(Object)
+      end
+    end
+
     context "where the value is true" do
       let(:method_signature_value) { described_class.new(true) }
       it { expect(subject).to eq(VerifiedDouble::Boolean) }
@@ -83,7 +92,7 @@ describe VerifiedDouble::MethodSignatureValue do
   describe "#as_instance" do
     context "where the value is an instance" do
       subject { described_class.new(:some_value) }
-      
+
       it "returns the value" do
         expect(subject.as_instance).to eq(:some_value)
       end
@@ -99,7 +108,7 @@ describe VerifiedDouble::MethodSignatureValue do
 
     context "where the value is a class which cannot be initialized" do
       subject { described_class.new(Integer) }
-      
+
       it "returns an object" do
         expect(subject.as_instance).to be_an(Object)
       end

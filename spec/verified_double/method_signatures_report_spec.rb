@@ -3,7 +3,12 @@ require 'verified_double'
 require 'verified_double/method_signatures_report'
 
 describe VerifiedDouble::MethodSignaturesReport do
-  describe "#set_registered_signatures" do
+  describe "initialize", verifies_contract: 'VerifiedDouble::MethodSignaturesReport.new()=>VerifiedDouble::MethodSignaturesReport' do
+    it { expect(described_class.new).to be_a(VerifiedDouble::MethodSignaturesReport) }
+  end
+
+  describe "#set_registered_signatures", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#set_registered_signatures()=>VerifiedDouble::MethodSignaturesReport' do
+
     let(:recording_double_1) {
       double('VerifiedDouble::RecordingDouble',
         method_signatures: [method_signature_1]) }
@@ -46,7 +51,7 @@ describe VerifiedDouble::MethodSignaturesReport do
     end
   end
 
-  describe "#set_verified_signatures_from_tags" do
+  describe "#set_verified_signatures_from_tags", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#set_verified_signatures_from_tags()=>VerifiedDouble::MethodSignaturesReport' do
     let(:method_signature) { VerifiedDouble::MethodSignature.new }
 
     let(:nested_example_group){ double(:nested_example_group) }
@@ -103,7 +108,7 @@ describe VerifiedDouble::MethodSignaturesReport do
     end
   end
 
-  describe "#identify_unverified_signatures" do
+  describe "#identify_unverified_signatures", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#identify_unverified_signatures()=>VerifiedDouble::MethodSignaturesReport' do
     let(:registered_signature) {
       VerifiedDouble::MethodSignature.new(
         class_name: 'Person',
@@ -132,12 +137,12 @@ describe VerifiedDouble::MethodSignaturesReport do
       subject.verified_signatures = [verified_signature]
 
       expect(subject.unverified_signatures).to be_empty
-      subject.identify_unverified_signatures
+      expect(subject.identify_unverified_signatures).to eq(subject)
       expect(subject.unverified_signatures).to eq([registered_signature_without_match])
     end
   end
 
-  describe "#output_unverified_signatures" do
+  describe "#output_unverified_signatures", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#output_unverified_signatures()=>VerifiedDouble::MethodSignaturesReport' do
     class Dummy
     end
 
@@ -159,7 +164,7 @@ describe VerifiedDouble::MethodSignaturesReport do
       it "should not output anything" do
         subject.unverified_signatures = []
         subject.should_not_receive(:puts)
-        subject.output_unverified_signatures
+        expect(subject.output_unverified_signatures).to eq(subject)
       end
     end
 
@@ -178,7 +183,7 @@ describe VerifiedDouble::MethodSignaturesReport do
     end
   end
 
-  describe "#set_verified_signatures_from_matchers" do
+  describe "#set_verified_signatures_from_matchers", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#set_verified_signatures_from_matchers()=>VerifiedDouble::MethodSignaturesReport' do
     let(:verified_double_module){
       VerifiedDouble.of_class('VerifiedDouble') }
 
@@ -194,7 +199,7 @@ describe VerifiedDouble::MethodSignaturesReport do
     end
   end
 
-  describe "#merge_verified_signatures" do
+  describe "#merge_verified_signatures", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#merge_verified_signatures()=>VerifiedDouble::MethodSignaturesReport' do
     let(:method_signature_from_tag) { VerifiedDouble::MethodSignature.new }
     let(:method_signature_from_matcher) { VerifiedDouble::MethodSignature.new }
 

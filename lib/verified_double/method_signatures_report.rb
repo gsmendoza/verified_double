@@ -25,11 +25,12 @@ module VerifiedDouble
 
     def output_unverified_signatures
       if @unverified_signatures.any?
-        output = ["The following mocks are not verified:" ] + @unverified_signatures.map(&:recommended_verified_signature)
+        output = ["The following mocks are not verified:" ] + @unverified_signatures.map(&:recommended_verified_signature).map(&:to_s).sort
         puts output.join("\n")
       end
+      self
     end
-    
+
     def set_registered_signatures
       @registered_signatures = VerifiedDouble.registry.map(&:method_signatures).flatten.uniq
       self
