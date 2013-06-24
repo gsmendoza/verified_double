@@ -34,4 +34,4 @@ References
 Special thanks
 --------------
 
-To @anathematic and [Inner Core Designs](http://icdesign.com.au) for sponsoring this gem :)
+To [Thomas Sinclair](https://twitter.com/anathematic) and [Inner Core Designs](http://icdesign.com.au) for sponsoring this gem :)
