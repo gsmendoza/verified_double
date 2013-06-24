@@ -1,4 +1,4 @@
-Feature: Verified mocks
+Feature: 01. Verified mocks
   As a developer
   I want to be informed if the mocks I use are verified by contract tests
 

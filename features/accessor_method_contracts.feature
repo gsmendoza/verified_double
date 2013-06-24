@@ -1,4 +1,4 @@
-Feature: Accessor method contracts
+Feature: 05. Accessor method contracts
   As a developer
   I want it to easy to verify contracts for accessor methods
 
