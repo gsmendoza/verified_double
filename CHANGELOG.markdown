@@ -1,3 +1,11 @@
+0.1.0 - 2013-06-24
+------------------
+
+* [#3] Pass Scenario: Verifying mocks for accessors.
+* [#3] Pass Scenario: Verifying mocks for readers
+* [#5] Remove rspec-fire dependency.
+* [#5] Use VerifiedDouble to mock and stub doubles in own tests.
+
 0.0.2 - 2013-06-22
 ------------------
 
