@@ -1,3 +1,14 @@
+0.1.1 - 2013-06-26
+------------------
+
+* Constantize should be a runtime dependency since constantize is used in
+  VerifiedDouble::MethodSignatureValue.
+
+* [#10] Fix VerifiedDouble::MethodSignatureValue#modified_class.
+  If the value is an rspec double, the modified_class should be the class
+  represented by the double's name.
+
+
 0.1.0 - 2013-06-24
 ------------------
 
