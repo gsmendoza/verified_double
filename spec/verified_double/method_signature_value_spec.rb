@@ -62,6 +62,15 @@ describe VerifiedDouble::MethodSignatureValue do
       end
     end
 
+    context "where the value is a double" do
+      let(:d){ double('Object') }
+      let(:method_signature_value) { described_class.new(d) }
+
+      it "is the class represented by the class_name of the recording double" do
+        expect(subject).to eq(Object)
+      end
+    end
+
     context "where the value is true" do
       let(:method_signature_value) { described_class.new(true) }
       it { expect(subject).to eq(VerifiedDouble::Boolean) }
