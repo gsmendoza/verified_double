@@ -2,34 +2,38 @@
 
 [![Build Status](https://travis-ci.org/gsmendoza/verified_double.png)](https://travis-ci.org/gsmendoza/verified_double)
 
-VerifiedDouble verifies mocks made in the test suite by checking if there are tests against them.
+VerifiedDouble is a gem for verifying rspec mocks. The gem works similar to [rspec-fire](https://github.com/xaviershay/rspec-fire‎). However, instead of checking if the doubled classes respond to the methods, the gem looks for tests confirming if those mocks are valid.
 
 For example, let's say I mocked the created_at method of a model like this:
 
     item = VerifiedDouble.of_instance(Item)
     item.should_receive(:created_at).and_return(Time.now)
 
-The item double records its :created_at call. When
-running the tests, the gem looks for a test that confirms if you can
-indeed call #created_at on Item. The test should also ensure that the method
-returns a Time object. Since this is hard to automate, the gem just looks
-for a test with a tag saying it verifies that contract:
+When running the tests, the gem looks for a "contract test" tagged with the method's signature. This test should ensure that calling #created_at on Item will return a Time object.
 
     it "tests something", verifies_contract: 'Item#created_at()=>Time' do
       #...
     end
 
-If this test does not exist, the gem will complain that the mock is not
-verified.
+If this test does not exist, the gem will complain that the mock is not verified.
 
-More information at https://www.relishapp.com/gsmendoza/verified-double.
+I got the idea from http://www.infoq.com/presentations/integration-tests-scam, an old (2009) talk that still has some fresh insights on dealing with API changes in your mocked tests.
 
-References
-----------
+You can learn more about using the gem at https://www.relishapp.com/gsmendoza/verified-double.
 
-1. http://www.confreaks.com/videos/2452-railsconf2013-the-magic-tricks-of-testing
-2. https://www.relishapp.com/bogus/bogus/v/0-0-3/docs/contract-tests
-3. http://www.infoq.com/presentations/integration-tests-scam
+Alternatives
+------------
+
+[Bogus](https://www.relishapp.com/bogus/bogus/v/0-0-3/docs/) is the first gem to implement contract tests. It doesn't rely on rspec tags to verify contracts, so it's probably a lot smarter than VerifiedDouble :) However, I wasn't able to try it out on my own projects because of its own rr-like mock adapter. But do check it out!
+
+Caveats
+-------
+
+VerifiedDouble is still in its infancy, but I hope it's usable for the most common cases.
+
+* If you check the RelishApp doc, the gem only supports a subset of rspec-mock's API. Please post an issue at http://github.com/gsmendoza/verified_double if you need support for any particular rspec-mock API.
+
+* The [method documentation](http://rubydoc.info/gems/verified_double) is pretty empty at this point :p I'm planning to use yard-spec to document the methods but that gem doesn't support rspec context blocks. I'll try to work on that soon.
 
 Special thanks
 --------------
