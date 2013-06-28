@@ -207,4 +207,10 @@ describe VerifiedDouble::RecordingDouble do
       expect { subject.fake_to_s }.to throw_symbol(:some_error)
     end
   end
+
+  describe "#class" do
+    it "is the constant matching the class name" do
+      expect(subject.class).to eq(Object)
+    end
+  end
 end

@@ -29,8 +29,6 @@ module VerifiedDouble
     def modified_class
       if value.is_a?(RSpec::Mocks::Mock)
         value.instance_variable_get('@name').constantize
-      elsif value.is_a?(VerifiedDouble::RecordingDouble)
-        value.class_name.constantize
       elsif value == true or value == false
         VerifiedDouble::Boolean
       else

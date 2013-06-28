@@ -26,6 +26,10 @@ module VerifiedDouble
       self
     end
 
+    def class
+      class_name.constantize
+    end
+
     def class_double?
       ! double.is_a?(RSpec::Mocks::Mock)
     end
