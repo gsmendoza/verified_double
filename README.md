@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gsmendoza/verified_double.png)](https://travis-ci.org/gsmendoza/verified_double)
 
-VerifiedDouble is a gem for verifying rspec mocks. The gem works similar to [rspec-fire](https://github.com/xaviershay/rspec-fire‎). However, instead of checking if the doubled classes respond to the methods, the gem looks for tests confirming if those mocks are valid.
+VerifiedDouble is a gem for verifying rspec mocks. The gem works similar to [rspec-fire](https://github.com/xaviershay/rspec-fire). However, instead of checking if the doubled classes respond to the methods, the gem looks for tests confirming if those mocks are valid.
 
 For example, let's say I mocked the created_at method of a model like this:
 
