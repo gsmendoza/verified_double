@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 require "verified_double/recording_double"
 
 describe VerifiedDouble::RecordingDouble do

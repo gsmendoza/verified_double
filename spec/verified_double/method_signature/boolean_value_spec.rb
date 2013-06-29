@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 
 describe VerifiedDouble::MethodSignature::BooleanValue do
   subject { described_class.new(true) }

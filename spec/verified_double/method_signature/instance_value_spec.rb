@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 
 describe VerifiedDouble::MethodSignature::InstanceValue do
   describe "#belongs_to?(other)" do

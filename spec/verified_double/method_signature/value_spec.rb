@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 require 'verified_double/method_signature/value'
 
 describe VerifiedDouble::MethodSignature::Value do

@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 
 describe VerifiedDouble::MethodSignature::ClassValue do
   subject { described_class.new(String) }

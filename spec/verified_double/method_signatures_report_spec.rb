@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 require 'verified_double'
 require 'verified_double/method_signatures_report'
 

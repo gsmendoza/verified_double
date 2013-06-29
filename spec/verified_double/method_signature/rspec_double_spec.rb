@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 
 describe VerifiedDouble::MethodSignature::RspecDoubleValue do
   let(:rspec_double) { double('Object') }

@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 require 'verified_double/parse_method_signature'
 
 describe VerifiedDouble::ParseMethodSignature do

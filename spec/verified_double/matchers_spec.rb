@@ -1,4 +1,4 @@
-require 'unit_helper'
+require 'spec_helper'
 require 'verified_double/matchers'
 
 describe VerifiedDouble::Matchers do
