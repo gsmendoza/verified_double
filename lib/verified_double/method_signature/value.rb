@@ -3,6 +3,10 @@ module VerifiedDouble
     class Value
       attr_reader :content
 
+      def self.from(content)
+        new(content)
+      end
+
       def initialize(content)
         @content = content
       end

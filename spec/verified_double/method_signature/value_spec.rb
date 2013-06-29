@@ -4,9 +4,9 @@ require 'verified_double/method_signature/value'
 describe VerifiedDouble::MethodSignature::Value do
   let(:value){ :some_value }
 
-  describe "#initialize" do
+  describe ".from(content" do
     it "requires a value from a method signature" do
-      described_class.new(value)
+      described_class.from(value)
     end
   end
 
