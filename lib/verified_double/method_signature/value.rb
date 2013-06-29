@@ -12,7 +12,7 @@ module VerifiedDouble
           if content.class_double?
             RecordingDoubleClassValue.new(content)
           else
-            new(content)
+            InstanceDoubleValue.new(content)
           end
         elsif content.is_a?(Class)
           ClassValue.new(content)

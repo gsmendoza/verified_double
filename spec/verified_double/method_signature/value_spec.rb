@@ -2,6 +2,11 @@ require 'unit_helper'
 require 'verified_double/method_signature/value'
 
 describe VerifiedDouble::MethodSignature::Value do
+  class Dummy
+  end
+
+  let(:class_name){ 'Dummy' }
+
   let(:value){ :some_value }
 
   describe ".from(content)" do
@@ -28,14 +33,17 @@ describe VerifiedDouble::MethodSignature::Value do
     end
 
     context "where content is an class recording double" do
-      class Dummy
-      end
-
-      let(:class_name){ 'Dummy' }
       let(:class_double){ stub_const(class_name, Class.new, transfer_nested_constants: true) }
-      let(:content) { VerifiedDouble::RecordingDouble.new(class_name, class_double) }
+      let(:content) { VerifiedDouble::RecordingDouble.new(class_double, class_name) }
 
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RecordingDoubleClassValue) }
+    end
+
+    context "where content is an instance recording double" do
+      let(:some_instance_double){ double('Dummy') }
+      let(:content) { VerifiedDouble::RecordingDouble.new(some_instance_double, class_name) }
+
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::InstanceDoubleValue) }
     end
   end
 
