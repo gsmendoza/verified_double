@@ -15,7 +15,7 @@ module VerifiedDouble
         end
       end
 
-      def as_instance
+      def content_as_instance
         if self.content.is_a?(Class)
           begin
             content.new
