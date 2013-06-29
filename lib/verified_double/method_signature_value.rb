@@ -10,7 +10,7 @@ module VerifiedDouble
       if self.content.is_a?(Class) || ! other.content.is_a?(Class)
         self.content == other.content
       else
-        self.modified_class.ancestors.include?(other.content)
+        self.content_class.ancestors.include?(other.content)
       end
     end
 
@@ -26,7 +26,7 @@ module VerifiedDouble
       end
     end
 
-    def modified_class
+    def content_class
       if content.is_a?(RSpec::Mocks::Mock)
         content.instance_variable_get('@name').constantize
       elsif content == true or content == false
@@ -37,7 +37,7 @@ module VerifiedDouble
     end
 
     def recommended_value
-      self.class.new(self.modified_class)
+      self.class.new(self.content_class)
     end
   end
 end

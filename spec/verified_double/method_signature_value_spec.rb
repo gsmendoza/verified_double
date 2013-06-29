@@ -50,8 +50,8 @@ describe VerifiedDouble::MethodSignatureValue do
     end
   end
 
-  describe "#modified_class" do
-    subject { method_signature_value.modified_class }
+  describe "#content_class" do
+    subject { method_signature_value.content_class }
 
     context "where the value is recording double" do
       let(:recording_double){ VerifiedDouble.of_instance('Object') }
@@ -93,7 +93,7 @@ describe VerifiedDouble::MethodSignatureValue do
     subject { described_class.new(value) }
 
     it "is a version of self that will be recommended to users to verify" do
-      expect(subject.recommended_value.content).to eq(subject.modified_class)
+      expect(subject.recommended_value.content).to eq(subject.content_class)
       expect(subject.recommended_value.content).to_not eq(subject)
     end
   end
