@@ -21,6 +21,13 @@ I got the idea from http://www.infoq.com/presentations/integration-tests-scam, a
 
 You can learn more about using the gem at https://www.relishapp.com/gsmendoza/verified-double.
 
+Actively tested against
+-----------------------
+
+* Ruby 1.9.3
+* RSpec 2.13
+
+
 Alternatives
 ------------
 
