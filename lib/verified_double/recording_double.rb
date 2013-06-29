@@ -21,7 +21,7 @@ module VerifiedDouble
     end
 
     def and_return(return_value)
-      self.method_signatures.last.return_values = [MethodSignatureValue.new(return_value)]
+      self.method_signatures.last.return_values = [MethodSignature::Value.new(return_value)]
       @double_call.and_return(return_value)
       self
     end
@@ -68,7 +68,7 @@ module VerifiedDouble
 
     def with(*args)
       self.method_signatures.last.args =
-        args.map{|arg| MethodSignatureValue.new(arg) }
+        args.map{|arg| MethodSignature::Value.new(arg) }
       @double_call.with(*args)
       self
     end

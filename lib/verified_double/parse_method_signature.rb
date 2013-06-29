@@ -9,7 +9,7 @@ module VerifiedDouble
     def args
       results = string.scan(/\((.*)\)/)[0]
       if results
-        results[0].split(',').map{|arg| MethodSignatureValue.new(eval(arg)) }
+        results[0].split(',').map{|arg| MethodSignature::Value.new(eval(arg)) }
       else
         []
       end
@@ -40,7 +40,7 @@ module VerifiedDouble
       results = string.scan(/=>(.*)/)[0]
       if results
         results[0].split(',').map{|return_value|
-          MethodSignatureValue.new(eval(return_value)) }
+          MethodSignature::Value.new(eval(return_value)) }
       else
         []
       end

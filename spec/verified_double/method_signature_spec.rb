@@ -21,7 +21,7 @@ describe VerifiedDouble::MethodSignature do
 
     context "when there are args" do
       it "includes the arg values in the result" do
-        subject.args = [VerifiedDouble::MethodSignatureValue.new(1), VerifiedDouble::MethodSignatureValue.new({})]
+        subject.args = [VerifiedDouble::MethodSignature::Value.new(1), VerifiedDouble::MethodSignature::Value.new({})]
         expect(subject.to_s).to eq("Dummy#do_something(1, {})")
       end
     end
@@ -35,14 +35,14 @@ describe VerifiedDouble::MethodSignature do
 
     context "when there is a nil arg" do
       it "displays nil for the arg of the result" do
-        subject.args = [VerifiedDouble::MethodSignatureValue.new(nil)]
+        subject.args = [VerifiedDouble::MethodSignature::Value.new(nil)]
         expect(subject.to_s).to eq("Dummy#do_something(nil)")
       end
     end
 
     context "where there is a return value" do
       it "displays the return value" do
-        subject.return_values = [VerifiedDouble::MethodSignatureValue.new(true)]
+        subject.return_values = [VerifiedDouble::MethodSignature::Value.new(true)]
         expect(subject.to_s).to eq("Dummy#do_something()=>true")
       end
     end
@@ -76,8 +76,8 @@ describe VerifiedDouble::MethodSignature do
         class_name: 'Dummy',
         method_operator: '.',
         method: 'find',
-        args: [VerifiedDouble::MethodSignatureValue.new(1)],
-        return_values: [VerifiedDouble::MethodSignatureValue.new(Dummy.new)]) }
+        args: [VerifiedDouble::MethodSignature::Value.new(1)],
+        return_values: [VerifiedDouble::MethodSignature::Value.new(Dummy.new)]) }
 
     subject { method_signature.belongs_to?(other) }
 
@@ -104,7 +104,7 @@ describe VerifiedDouble::MethodSignature do
     context "where self and other have different number of args" do
       let(:other){
         method_signature.clone.tap{|ms|
-          ms.args = [VerifiedDouble::MethodSignatureValue.new(1), VerifiedDouble::MethodSignatureValue.new(2)] } }
+          ms.args = [VerifiedDouble::MethodSignature::Value.new(1), VerifiedDouble::MethodSignature::Value.new(2)] } }
 
       it { expect(subject).to be_false }
     end
@@ -112,7 +112,7 @@ describe VerifiedDouble::MethodSignature do
     context "where not all of self's args accept the args of other" do
       let(:other){
         method_signature.clone.tap{|ms|
-          ms.args = [VerifiedDouble::MethodSignatureValue.new(2)] } }
+          ms.args = [VerifiedDouble::MethodSignature::Value.new(2)] } }
 
       it { expect(subject).to be_false }
     end
@@ -120,7 +120,7 @@ describe VerifiedDouble::MethodSignature do
     context "where self and other have different number of return values" do
       let(:other){
         method_signature.clone.tap{|ms|
-          ms.return_values = [VerifiedDouble::MethodSignatureValue.new(1), VerifiedDouble::MethodSignatureValue.new(2)] } }
+          ms.return_values = [VerifiedDouble::MethodSignature::Value.new(1), VerifiedDouble::MethodSignature::Value.new(2)] } }
 
       it { expect(subject).to be_false }
     end
@@ -128,7 +128,7 @@ describe VerifiedDouble::MethodSignature do
     context "where not all of self's return values accept the return values of other" do
       let(:other){
         method_signature.clone.tap{|ms|
-          ms.return_values = [VerifiedDouble::MethodSignatureValue.new(Symbol)] } }
+          ms.return_values = [VerifiedDouble::MethodSignature::Value.new(Symbol)] } }
 
       it { expect(subject).to be_false }
     end
@@ -140,8 +140,8 @@ describe VerifiedDouble::MethodSignature do
         class_name: 'Dummy',
         method_operator: '.',
         method: 'find',
-        args: [VerifiedDouble::MethodSignatureValue.new(1)],
-        return_values: [VerifiedDouble::MethodSignatureValue.new(Dummy.new)]) }
+        args: [VerifiedDouble::MethodSignature::Value.new(1)],
+        return_values: [VerifiedDouble::MethodSignature::Value.new(Dummy.new)]) }
 
     subject { method_signature.recommended_verified_signature }
 

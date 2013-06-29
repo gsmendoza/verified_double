@@ -1,7 +1,7 @@
 require 'unit_helper'
-require 'verified_double/method_signature_value'
+require 'verified_double/method_signature/value'
 
-describe VerifiedDouble::MethodSignatureValue do
+describe VerifiedDouble::MethodSignature::Value do
   let(:value){ :some_value }
 
   describe "#initialize" do

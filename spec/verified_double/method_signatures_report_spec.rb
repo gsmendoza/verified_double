@@ -114,7 +114,7 @@ describe VerifiedDouble::MethodSignaturesReport do
         class_name: 'Person',
         method: 'find',
         method_operator: '.',
-        args: [VerifiedDouble::MethodSignatureValue.new(1)]) }
+        args: [VerifiedDouble::MethodSignature::Value.new(1)]) }
 
     let(:registered_signature_without_match) {
       VerifiedDouble::MethodSignature.new(
@@ -127,7 +127,7 @@ describe VerifiedDouble::MethodSignaturesReport do
         class_name: 'Person',
         method: 'find',
         method_operator: '.',
-        args: [VerifiedDouble::MethodSignatureValue.new(Object)]) }
+        args: [VerifiedDouble::MethodSignature::Value.new(Object)]) }
 
     it "retains registered signatures that cannot accept any of the verified_signatures" do
       expect(registered_signature.belongs_to?(verified_signature)).to be_true
@@ -151,14 +151,14 @@ describe VerifiedDouble::MethodSignaturesReport do
         class_name: 'Dummy',
         method_operator: '.',
         method: 'find',
-        args: [VerifiedDouble::MethodSignatureValue.new(1)],
-        return_values: [VerifiedDouble::MethodSignatureValue.new(Dummy.new)]),
+        args: [VerifiedDouble::MethodSignature::Value.new(1)],
+        return_values: [VerifiedDouble::MethodSignature::Value.new(Dummy.new)]),
       VerifiedDouble::MethodSignature.new(
         class_name: 'Dummy',
         method_operator: '.',
         method: 'where',
-        args: [VerifiedDouble::MethodSignatureValue.new(id: 1)],
-        return_values: [VerifiedDouble::MethodSignatureValue.new(Dummy.new)]) ] }
+        args: [VerifiedDouble::MethodSignature::Value.new(id: 1)],
+        return_values: [VerifiedDouble::MethodSignature::Value.new(Dummy.new)]) ] }
 
     context "where there are no unverified_signatures" do
       it "should not output anything" do
