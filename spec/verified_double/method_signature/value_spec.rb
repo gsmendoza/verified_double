@@ -16,22 +16,15 @@ describe VerifiedDouble::MethodSignature::Value do
       let(:content) { false }
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::BooleanValue) }
     end
+
+    context "where content is a class" do
+      let(:content) { String }
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::ClassValue) }
+    end
   end
 
   describe "#belongs_to?(other)" do
     subject { this.belongs_to?(other) }
-
-    context "where self's value is an actual class and other's value matches it" do
-      let(:this){ described_class.new(Fixnum) }
-      let(:other){ described_class.new(Fixnum) }
-      it { expect(subject).to be_true }
-    end
-
-    context "where self's value is an actual class and other's value does not match it" do
-      let(:this){ described_class.new(Fixnum) }
-      let(:other){ described_class.new(Object) }
-      it { expect(subject).to be_false }
-    end
 
     context "where the other value is an instance and self's value matches it" do
       let(:this){ described_class.new(1) }
@@ -102,22 +95,6 @@ describe VerifiedDouble::MethodSignature::Value do
 
       it "returns the value" do
         expect(subject.content_as_instance).to eq(:some_value)
-      end
-    end
-
-    context "where the value is a class which can be initialized" do
-      subject { described_class.new(String) }
-
-      it "returns the initialized instance of the value " do
-        expect(subject.content_as_instance).to eq(String.new)
-      end
-    end
-
-    context "where the value is a class which cannot be initialized" do
-      subject { described_class.new(Integer) }
-
-      it "returns an object" do
-        expect(subject.content_as_instance).to be_an(Object)
       end
     end
   end

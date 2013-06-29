@@ -6,6 +6,8 @@ module VerifiedDouble
       def self.from(content)
         if content == true || content == false
           BooleanValue.new(content)
+        elsif content.is_a?(Class)
+          ClassValue.new(content)
         else
           new(content)
         end
@@ -16,7 +18,7 @@ module VerifiedDouble
       end
 
       def belongs_to?(other)
-        if self.content.is_a?(Class) || ! other.content.is_a?(Class)
+        if ! other.content.is_a?(Class)
           self.content == other.content
         else
           self.content_class.ancestors.include?(other.content)
@@ -24,15 +26,7 @@ module VerifiedDouble
       end
 
       def content_as_instance
-        if self.content.is_a?(Class)
-          begin
-            content.new
-          rescue NoMethodError
-            Object.new
-          end
-        else
-          self.content
-        end
+        self.content
       end
 
       def content_class

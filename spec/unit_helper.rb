@@ -9,6 +9,7 @@ require 'verified_double/boolean'
 require "verified_double/method_signature"
 require "verified_double/method_signature/value"
 require 'verified_double/method_signature/boolean_value'
+require 'verified_double/method_signature/class_value'
 
 # Requiring because these are macros.
 require 'verified_double/relays_to_internal_double_returning_self'
