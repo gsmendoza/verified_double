@@ -4,7 +4,11 @@ module VerifiedDouble
       attr_reader :content
 
       def self.from(content)
-        new(content)
+        if content == true || content == false
+          BooleanValue.new(content)
+        else
+          new(content)
+        end
       end
 
       def initialize(content)
@@ -34,8 +38,6 @@ module VerifiedDouble
       def content_class
         if content.is_a?(RSpec::Mocks::Mock)
           content.instance_variable_get('@name').constantize
-        elsif content == true or content == false
-          VerifiedDouble::Boolean
         else
           content.class
         end
