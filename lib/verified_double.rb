@@ -1,3 +1,4 @@
+require 'active_support/core_ext/string'
 require 'rspec/mocks'
 
 require 'verified_double/boolean'
