@@ -10,8 +10,8 @@ describe VerifiedDouble::MethodSignatureValue do
     end
   end
 
-  describe "#accepts?(other)" do
-    subject { this.accepts?(other) }
+  describe "#belongs_to?(other)" do
+    subject { this.belongs_to?(other) }
 
     context "where self's value is an actual class and other's value matches it" do
       let(:this){ described_class.new(Fixnum) }

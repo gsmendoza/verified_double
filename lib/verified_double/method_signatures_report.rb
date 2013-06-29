@@ -14,7 +14,7 @@ module VerifiedDouble
     def identify_unverified_signatures
       @unverified_signatures = @registered_signatures.select{|registered_signature|
        @verified_signatures.all?{|verified_signature|
-        ! registered_signature.accepts?(verified_signature) } }
+        ! registered_signature.belongs_to?(verified_signature) } }
       self
     end
 

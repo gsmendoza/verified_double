@@ -8,14 +8,14 @@ module VerifiedDouble
       end
     end
 
-    def accepts?(other)
+    def belongs_to?(other)
       self.class_name == other.class_name &&
       self.method_operator == other.method_operator &&
       self.method == other.method &&
       self.args.size == other.args.size &&
-      (0 ... args.size).all?{|i| self.args[i].accepts?(other.args[i]) } &&
+      (0 ... args.size).all?{|i| self.args[i].belongs_to?(other.args[i]) } &&
       self.return_values.size == other.return_values.size &&
-      (0 ... return_values.size).all?{|i| self.return_values[i].accepts?(other.return_values[i]) }
+      (0 ... return_values.size).all?{|i| self.return_values[i].belongs_to?(other.return_values[i]) }
     end
 
     def args

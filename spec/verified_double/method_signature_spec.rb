@@ -70,7 +70,7 @@ describe VerifiedDouble::MethodSignature do
     it { expect([method_signature, method_signature_with_same_to_s].uniq == [method_signature]).to be_true }
   end
 
-  describe "#accepts?(other)" do
+  describe "#belongs_to?(other)" do
     let(:method_signature){
       described_class.new(
         class_name: 'Dummy',
@@ -79,7 +79,7 @@ describe VerifiedDouble::MethodSignature do
         args: [VerifiedDouble::MethodSignatureValue.new(1)],
         return_values: [VerifiedDouble::MethodSignatureValue.new(Dummy.new)]) }
 
-    subject { method_signature.accepts?(other) }
+    subject { method_signature.belongs_to?(other) }
 
     context "where self has same attributes as other" do
       let(:other){ method_signature.clone }

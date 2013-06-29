@@ -130,8 +130,8 @@ describe VerifiedDouble::MethodSignaturesReport do
         args: [VerifiedDouble::MethodSignatureValue.new(Object)]) }
 
     it "retains registered signatures that cannot accept any of the verified_signatures" do
-      expect(registered_signature.accepts?(verified_signature)).to be_true
-      expect(registered_signature_without_match.accepts?(verified_signature)).to be_false
+      expect(registered_signature.belongs_to?(verified_signature)).to be_true
+      expect(registered_signature_without_match.belongs_to?(verified_signature)).to be_false
 
       subject.registered_signatures = [registered_signature, registered_signature_without_match]
       subject.verified_signatures = [verified_signature]

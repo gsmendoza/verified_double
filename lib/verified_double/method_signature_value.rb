@@ -6,7 +6,7 @@ module VerifiedDouble
       @value = value
     end
 
-    def accepts?(other)
+    def belongs_to?(other)
       if self.value.is_a?(Class) || ! other.value.is_a?(Class)
         self.value == other.value
       else
