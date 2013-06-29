@@ -65,7 +65,7 @@ describe VerifiedDouble::ParseMethodSignature do
       let(:string){ "Class.method(:arg_1, :arg_2)" }
 
       it "builds method signature values from the evals of the args" do
-        expect(subject.args.map(&:value)).to eq([:arg_1, :arg_2])
+        expect(subject.args.map(&:content)).to eq([:arg_1, :arg_2])
       end
     end
 
@@ -83,7 +83,7 @@ describe VerifiedDouble::ParseMethodSignature do
   describe "#return_values" do
     context "for Class.method=>:return_value" do
       let(:string){ "Class.method=>:return_value" }
-      it { expect(subject.return_values.map(&:value)).to eq([:return_value]) }
+      it { expect(subject.return_values.map(&:content)).to eq([:return_value]) }
     end
 
     context "for Class.method" do

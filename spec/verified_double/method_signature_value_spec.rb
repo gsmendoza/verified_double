@@ -93,8 +93,8 @@ describe VerifiedDouble::MethodSignatureValue do
     subject { described_class.new(value) }
 
     it "is a version of self that will be recommended to users to verify" do
-      expect(subject.recommended_value.value).to eq(subject.modified_class)
-      expect(subject.recommended_value.value).to_not eq(subject)
+      expect(subject.recommended_value.content).to eq(subject.modified_class)
+      expect(subject.recommended_value.content).to_not eq(subject)
     end
   end
 

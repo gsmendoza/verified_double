@@ -138,7 +138,7 @@ describe VerifiedDouble::RecordingDouble do
       subject.should_receive(:fake_to_s).with(:arg_1, :arg_2)
 
       expect(subject.method_signatures[0].args).to be_all{|arg| arg.is_a?(VerifiedDouble::MethodSignatureValue) }
-      expect(subject.method_signatures[0].args.map(&:value)).to eq([:arg_1, :arg_2])
+      expect(subject.method_signatures[0].args.map(&:content)).to eq([:arg_1, :arg_2])
 
       subject.fake_to_s(:arg_1, :arg_2)
     end
@@ -151,7 +151,7 @@ describe VerifiedDouble::RecordingDouble do
       return_values = subject.method_signatures[0].return_values
       expect(return_values).to have(1).return_value
       expect(return_values.first).to be_a(VerifiedDouble::MethodSignatureValue)
-      expect(return_values.first.value).to eq(:return_value)
+      expect(return_values.first.content).to eq(:return_value)
 
       subject.fake_to_s(:arg_1, :arg_2)
     end

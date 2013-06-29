@@ -146,8 +146,8 @@ describe VerifiedDouble::MethodSignature do
     subject { method_signature.recommended_verified_signature }
 
     it "is a method signature that is recommended for the user to verify" do
-      expect(subject.args[0].value).to eq(method_signature.args[0].recommended_value.value)
-      expect(subject.return_values[0].value).to eq(method_signature.return_values[0].recommended_value.value)
+      expect(subject.args[0].content).to eq(method_signature.args[0].recommended_value.content)
+      expect(subject.return_values[0].content).to eq(method_signature.return_values[0].recommended_value.content)
     end
   end
 end

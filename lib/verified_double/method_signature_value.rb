@@ -1,38 +1,38 @@
 module VerifiedDouble
   class MethodSignatureValue
-    attr_reader :value
+    attr_reader :content
 
-    def initialize(value)
-      @value = value
+    def initialize(content)
+      @content = content
     end
 
     def belongs_to?(other)
-      if self.value.is_a?(Class) || ! other.value.is_a?(Class)
-        self.value == other.value
+      if self.content.is_a?(Class) || ! other.content.is_a?(Class)
+        self.content == other.content
       else
-        self.modified_class.ancestors.include?(other.value)
+        self.modified_class.ancestors.include?(other.content)
       end
     end
 
     def as_instance
-      if self.value.is_a?(Class)
+      if self.content.is_a?(Class)
         begin
-          value.new
+          content.new
         rescue NoMethodError
           Object.new
         end
       else
-        self.value
+        self.content
       end
     end
 
     def modified_class
-      if value.is_a?(RSpec::Mocks::Mock)
-        value.instance_variable_get('@name').constantize
-      elsif value == true or value == false
+      if content.is_a?(RSpec::Mocks::Mock)
+        content.instance_variable_get('@name').constantize
+      elsif content == true or content == false
         VerifiedDouble::Boolean
       else
-        value.class
+        content.class
       end
     end
 

@@ -26,7 +26,7 @@ module VerifiedDouble
 
         raise CannotHandleMultipleReturnValues if method_signature.return_values.size > 1
 
-        actual.send(method_signature.method).is_a?(method_signature.return_values.first.value)
+        actual.send(method_signature.method).is_a?(method_signature.return_values.first.content)
       end
     end
 

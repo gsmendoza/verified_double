@@ -42,8 +42,8 @@ module VerifiedDouble
     end
 
     def to_s
-      args_string = args.map(&:value).map{|v| v || 'nil'}.join(', ')
-      return_values_string = return_values.map(&:value).map{|v| v || 'nil'}.join(', ')
+      args_string = args.map(&:content).map{|v| v || 'nil'}.join(', ')
+      return_values_string = return_values.map(&:content).map{|v| v || 'nil'}.join(', ')
       return_values_string = nil if return_values_string.empty?
 
       result = [
