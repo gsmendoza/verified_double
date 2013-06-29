@@ -1,6 +1,6 @@
 module VerifiedDouble
   class MethodSignature
-    class BooleanValue < Value
+    class BooleanValue < InstanceValue
       def content_class
         VerifiedDouble::Boolean
       end

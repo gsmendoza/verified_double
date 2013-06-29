@@ -45,33 +45,11 @@ describe VerifiedDouble::MethodSignature::Value do
 
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::InstanceDoubleValue) }
     end
-  end
 
-  describe "#belongs_to?(other)" do
-    subject { this.belongs_to?(other) }
+    context "where content is an instance" do
+      let(:content) { :some_symbol }
 
-    context "where the other value is an instance and self's value matches it" do
-      let(:this){ described_class.new(1) }
-      let(:other){ described_class.new(1) }
-      it { expect(subject).to be_true }
-    end
-
-    context "where the other value is an instance and self's value does not it" do
-      let(:this){ described_class.new(2) }
-      let(:other){ described_class.new(1) }
-      it { expect(subject).to be_false }
-    end
-
-    context "where self is an instance and the other's class is an ancestor of self's modified class" do
-      let(:this){ described_class.new(1) }
-      let(:other){ described_class.new(Object) }
-      it { expect(subject).to be_true }
-    end
-
-    context "where self is an instance and the other's class is not an ancestor of self's modified class" do
-      let(:this){ described_class.new(1) }
-      let(:other){ described_class.new(Float) }
-      it { expect(subject).to be_false }
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::InstanceValue) }
     end
   end
 
@@ -101,16 +79,6 @@ describe VerifiedDouble::MethodSignature::Value do
     it "is a version of self that will be recommended to users to verify" do
       expect(subject.recommended_value.content).to eq(subject.content_class)
       expect(subject.recommended_value.content).to_not eq(subject)
-    end
-  end
-
-  describe "#content_as_instance" do
-    context "where the value is an instance" do
-      subject { described_class.new(:some_value) }
-
-      it "returns the value" do
-        expect(subject.content_as_instance).to eq(:some_value)
-      end
     end
   end
 end
