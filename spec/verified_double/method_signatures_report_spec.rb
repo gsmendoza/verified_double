@@ -173,11 +173,13 @@ describe VerifiedDouble::MethodSignaturesReport do
         subject.unverified_signatures = unverified_signatures
 
         lines = [
+          nil,
           "The following mocks are not verified:",
-          unverified_signatures[0].recommended_verified_signature,
-          unverified_signatures[1].recommended_verified_signature ]
+          "1. #{unverified_signatures[0].recommended_verified_signature}",
+          "2. #{unverified_signatures[1].recommended_verified_signature}",
+          "For more info, check out https://www.relishapp.com/gsmendoza/verified-double." ]
 
-        subject.should_receive(:puts).with(lines.join("\n"))
+        subject.should_receive(:puts).with(lines.join("\n\n"))
         subject.output_unverified_signatures
       end
     end

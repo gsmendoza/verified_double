@@ -106,6 +106,13 @@ describe VerifiedDouble::RecordingDouble do
       recording_instance_double.fake_to_s
       recording_instance_double.fake_inspect
     end
+
+    it "records the stack frames of the recording double's caller" do
+      recording_instance_double.should_receive(:fake_to_s)
+      recording_instance_double.fake_to_s
+      expect(recording_instance_double.method_signatures.first.stack_frame.to_s)
+        .to include("spec/verified_double/recording_double_spec.rb")
+    end
   end
 
   describe "#stub(method)" do
@@ -116,6 +123,13 @@ describe VerifiedDouble::RecordingDouble do
       recording_instance_double.stub(:fake_inspect)
 
       expect(recording_instance_double.method_signatures.map(&:method)).to eq(['fake_to_s', 'fake_inspect'])
+    end
+
+    it "records the stack frames of the recording double's caller" do
+      recording_instance_double.stub(:fake_to_s)
+
+      expect(recording_instance_double.method_signatures.first.stack_frame.to_s)
+        .to include("spec/verified_double/recording_double_spec.rb")
     end
   end
 

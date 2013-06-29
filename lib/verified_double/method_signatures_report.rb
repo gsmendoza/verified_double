@@ -25,8 +25,15 @@ module VerifiedDouble
 
     def output_unverified_signatures
       if @unverified_signatures.any?
-        output = ["The following mocks are not verified:" ] + @unverified_signatures.map(&:recommended_verified_signature).map(&:to_s).sort
-        puts output.join("\n")
+        output = [nil, "The following mocks are not verified:" ] +
+          @unverified_signatures
+            .map(&:recommended_verified_signature)
+            .map(&:to_s)
+            .sort
+            .each_with_index
+            .map{|string, i| "#{i+1}. #{string}" } +
+          ["For more info, check out https://www.relishapp.com/gsmendoza/verified-double."]
+        puts output.join("\n\n")
       end
       self
     end

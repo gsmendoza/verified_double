@@ -93,7 +93,8 @@ Feature: 01. Verified mocks
     Then I should be informed that the mock is unverified:
       """
       The following mocks are not verified:
-      Collaborator#some_method(SomeInput)=>SomeOutput
+
+      1. Collaborator#some_method(SomeInput)=>SomeOutput
       """
 
   Scenario: Verified class doubles
@@ -147,5 +148,6 @@ Feature: 01. Verified mocks
     Then I should be informed that the mock is unverified:
       """
       The following mocks are not verified:
-      Collaborator.some_method(SomeInput)=>SomeOutput
+
+      1. Collaborator.some_method(SomeInput)=>SomeOutput
       """

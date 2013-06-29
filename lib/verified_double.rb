@@ -13,8 +13,10 @@ require 'verified_double/method_signature/recording_double_class_value'
 require 'verified_double/method_signature/rspec_double_value'
 require 'verified_double/method_signatures_report'
 require 'verified_double/parse_method_signature'
+require 'verified_double/recorded_method_signature'
 require 'verified_double/recording_double'
 require 'verified_double/relays_to_internal_double_returning_self'
+require 'verified_double/stack_frame'
 
 module VerifiedDouble
   extend RSpec::Mocks::ExampleMethods

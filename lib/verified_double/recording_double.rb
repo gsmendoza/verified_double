@@ -80,10 +80,11 @@ module VerifiedDouble
     private
 
     def add_method_signature(method)
-      method_signature = MethodSignature.new(
+      method_signature = RecordedMethodSignature.new(
         class_name: class_name,
         method_operator: method_operator,
-        method: method.to_s)
+        method: method.to_s,
+        stack_frame: StackFrame.new(caller(2)[0]))
 
       self.method_signatures << method_signature
     end
