@@ -21,6 +21,11 @@ describe VerifiedDouble::MethodSignature::Value do
       let(:content) { String }
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::ClassValue) }
     end
+
+    context "where content is an rspec mock" do
+      let(:content) { double(:stuff) }
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RspecDoubleValue) }
+    end
   end
 
   describe "#belongs_to?(other)" do
@@ -57,15 +62,6 @@ describe VerifiedDouble::MethodSignature::Value do
     context "where the value is recording double" do
       let(:recording_double){ VerifiedDouble.of_instance('Object') }
       let(:method_signature_value) { described_class.new(recording_double) }
-
-      it "is the class represented by the class_name of the recording double" do
-        expect(subject).to eq(Object)
-      end
-    end
-
-    context "where the value is a double" do
-      let(:d){ double('Object') }
-      let(:method_signature_value) { described_class.new(d) }
 
       it "is the class represented by the class_name of the recording double" do
         expect(subject).to eq(Object)

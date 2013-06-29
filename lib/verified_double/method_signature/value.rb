@@ -6,6 +6,8 @@ module VerifiedDouble
       def self.from(content)
         if content == true || content == false
           BooleanValue.new(content)
+        elsif content.is_a?(RSpec::Mocks::Mock)
+          RspecDoubleValue.new(content)
         elsif content.is_a?(Class)
           ClassValue.new(content)
         else
@@ -30,11 +32,7 @@ module VerifiedDouble
       end
 
       def content_class
-        if content.is_a?(RSpec::Mocks::Mock)
-          content.instance_variable_get('@name').constantize
-        else
-          content.class
-        end
+        content.class
       end
 
       def recommended_value
