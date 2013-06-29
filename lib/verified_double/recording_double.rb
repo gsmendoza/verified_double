@@ -27,7 +27,7 @@ module VerifiedDouble
     end
 
     def class
-      class_name.constantize
+      class_double? ? Class : doubled_class
     end
 
     def class_double?
@@ -36,6 +36,10 @@ module VerifiedDouble
 
     def double
       __getobj__
+    end
+
+    def doubled_class
+      class_name.constantize
     end
 
     def inspect

@@ -26,6 +26,17 @@ describe VerifiedDouble::MethodSignature::Value do
       let(:content) { double(:stuff) }
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RspecDoubleValue) }
     end
+
+    context "where content is an class recording double" do
+      class Dummy
+      end
+
+      let(:class_name){ 'Dummy' }
+      let(:class_double){ stub_const(class_name, Class.new, transfer_nested_constants: true) }
+      let(:content) { VerifiedDouble::RecordingDouble.new(class_name, class_double) }
+
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RecordingDoubleClassValue) }
+    end
   end
 
   describe "#belongs_to?(other)" do

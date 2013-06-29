@@ -8,6 +8,12 @@ module VerifiedDouble
           BooleanValue.new(content)
         elsif content.is_a?(RSpec::Mocks::Mock)
           RspecDoubleValue.new(content)
+        elsif content.respond_to?(:doubled_class)
+          if content.class_double?
+            RecordingDoubleClassValue.new(content)
+          else
+            new(content)
+          end
         elsif content.is_a?(Class)
           ClassValue.new(content)
         else
