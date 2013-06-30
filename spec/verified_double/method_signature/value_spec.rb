@@ -27,6 +27,11 @@ describe VerifiedDouble::MethodSignature::Value do
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::ClassValue) }
     end
 
+    context "where content is a module" do
+      let(:content) { VerifiedDouble }
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::ClassValue) }
+    end
+
     context "where content is an rspec mock" do
       let(:content) { double(:stuff) }
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RspecDoubleValue) }

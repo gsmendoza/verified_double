@@ -14,7 +14,7 @@ module VerifiedDouble
           else
             InstanceDoubleValue.new(content)
           end
-        elsif content.is_a?(Class)
+        elsif content.is_a?(Module)
           ClassValue.new(content)
         else
           InstanceValue.new(content)
