@@ -1,3 +1,15 @@
+0.2.0 - 2013-06-30
+------------------
+
+* [#4] Add stack frames and relish app link to output.
+* [#12] RecordingDouble#class should be the class of the object being doubled.
+* [#16] Fix handling of doubles passed as method signature values.
+
+Known issues:
+
+* Stack frames sometimes point to verified_double gem instead of where the mock was recorded.
+
+
 0.1.1 - 2013-06-26
 ------------------
 
