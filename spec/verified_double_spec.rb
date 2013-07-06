@@ -29,15 +29,17 @@ describe VerifiedDouble do
 
     let(:subject) { described_class.of_instance(class_name) }
 
-    it "creates an instance recording double" do
-      expect(subject).to be_a(VerifiedDouble::RecordingDouble)
-      expect(subject).to_not be_class_double
-      expect(subject.class_name).to eq(class_name)
+    it "adds the SimpleDouble version of the double to the registry" do
+      subject = described_class.of_instance(class_name)
+      expect(described_class.registry.last).to be_a(VerifiedDouble::SimpleDouble)
+      expect(described_class.registry.last.internal).to eq(subject)
+      expect(described_class.registry.last.class_name).to eq(class_name)
+
     end
 
-    it "adds the double to the registry" do
-      recording_double = subject
-      expect(described_class.registry.last).to eq(recording_double)
+    it "returns the double (not the SimpleDouble version)" do
+      subject = described_class.of_instance(class_name)
+      expect(subject).to be_a(RSpec::Mocks::Mock)
     end
 
     context "with method_stubs hash", verifies_contract: 'Object#some_method()=>Symbol' do
@@ -57,27 +59,14 @@ describe VerifiedDouble do
 
     let(:subject) { described_class.of_class(class_name) }
 
-    it "creates a class recording double" do
-      expect(subject).to be_a(VerifiedDouble::RecordingDouble)
-      expect(subject).to be_class_double
-      expect(subject.double).to be_a(Module)
-      expect(subject.class_name).to eq(class_name)
+    it "adds a SimpleDouble version of the double to the registry" do
+      the_double = subject
+      expect(described_class.registry.last.internal).to eq(the_double)
     end
 
-    it "adds the double to the registry" do
-      recording_double = subject
-      expect(described_class.registry.last).to eq(recording_double)
-    end
-
-    context "with methods hash", verifies_contract: 'Object.some_method()=>Symbol' do
-      let(:stubbed_method){ :some_method }
-      let(:assumed_output){ :some_output }
-
-      subject { described_class.of_class(class_name, some_method: assumed_output) }
-
-      it "stubs the methods of the class" do
-        expect(subject.send(stubbed_method)).to eq(assumed_output)
-      end
+    it "returns the double (not the SimpleDouble version)" do
+      subject = described_class.of_class(class_name)
+      expect(subject).to eq(class_name.constantize)
     end
   end
 
@@ -110,6 +99,20 @@ describe VerifiedDouble do
       end
 
       described_class.report_unverified_signatures(nested_example_group)
+    end
+  end
+
+  describe ".record(double)" do
+    let(:the_double){ double }
+
+    it "adds the SimpleDouble version of the double to the registry" do
+      described_class.record(the_double)
+      expect(described_class.registry.last).to be_a(VerifiedDouble::SimpleDouble)
+      expect(described_class.registry.last.internal).to eq(the_double)
+    end
+
+    it "returns the double (not the SimpleDouble version)" do
+      expect(described_class.record(the_double)).to eq(the_double)
     end
   end
 end

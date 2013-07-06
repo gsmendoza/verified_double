@@ -16,22 +16,25 @@ require 'verified_double/parse_method_signature'
 require 'verified_double/recorded_method_signature'
 require 'verified_double/recording_double'
 require 'verified_double/relays_to_internal_double_returning_self'
+require 'verified_double/simple_double'
+require 'verified_double/simple_double/method_double'
+require 'verified_double/simple_double/message_expectation'
 require 'verified_double/stack_frame'
 
 module VerifiedDouble
   extend RSpec::Mocks::ExampleMethods
 
-  def self.of_class(class_name, method_stubs = {})
-    class_double = stub_const(class_name, Class.new, transfer_nested_constants: true)
-    RecordingDouble.new(class_double, class_name, method_stubs).tap do |double|
-      registry << double
-    end
+  def self.of_class(class_name, options = {})
+    options[:transfer_nested_constants] = true if options[:transfer_nested_constants].nil?
+    VerifiedDouble.record(stub_const(class_name, Class.new, options))
   end
 
-  def self.of_instance(class_name, method_stubs = {})
-    RecordingDouble.new(double(class_name), class_name, method_stubs).tap do |double|
-      registry << double
-    end
+  def self.of_instance(*args)
+    VerifiedDouble.record(double(*args))
+  end
+
+  def self.record(object)
+    object.tap { VerifiedDouble.registry << SimpleDouble.new(object) }
   end
 
   def self.registry

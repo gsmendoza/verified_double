@@ -61,15 +61,6 @@ describe VerifiedDouble::MethodSignature::Value do
   describe "#content_class" do
     subject { method_signature_value.content_class }
 
-    context "where the value is recording double" do
-      let(:recording_double){ VerifiedDouble.of_instance('Object') }
-      let(:method_signature_value) { described_class.new(recording_double) }
-
-      it "is the class represented by the class_name of the recording double" do
-        expect(subject).to eq(Object)
-      end
-    end
-
     context "where the value is not true or false" do
       let(:method_signature_value) { described_class.new(1) }
       it "is the class of the value" do
