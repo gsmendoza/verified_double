@@ -2,6 +2,7 @@ require 'active_support/core_ext/string'
 require 'rspec/mocks'
 
 require 'verified_double/boolean'
+require 'verified_double/can_record_interactions'
 require 'verified_double/matchers'
 require 'verified_double/method_signature'
 require 'verified_double/method_signature/value'
@@ -14,6 +15,7 @@ require 'verified_double/method_signature/rspec_double_value'
 require 'verified_double/method_signatures_report'
 require 'verified_double/parse_method_signature'
 require 'verified_double/recorded_method_signature'
+require 'verified_double/recorded_method_signature_registry'
 require 'verified_double/recording_double'
 require 'verified_double/relays_to_internal_double_returning_self'
 require 'verified_double/simple_double'
@@ -33,12 +35,13 @@ module VerifiedDouble
     VerifiedDouble.record(double(*args))
   end
 
-  def self.record(object)
-    object.tap { VerifiedDouble.registry << SimpleDouble.new(object) }
+  def self.record(a_double)
+    a_double.extend(VerifiedDouble::CanRecordInteractions)
+    a_double
   end
 
   def self.registry
-    @registry ||= []
+    @registry ||= RecordedMethodSignatureRegistry.new
   end
 
   def self.report_unverified_signatures(nested_example_group)

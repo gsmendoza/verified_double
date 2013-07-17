@@ -3,9 +3,9 @@ require 'verified_double'
 
 describe VerifiedDouble do
   describe ".registry" do
-    it "is a array", verifies_contract: 'VerifiedDouble.registry()=>Array' do
+    it "is an RecordedMethodSignatureRegistry", verifies_contract: 'VerifiedDouble.registry()=>RecordedMethodSignatureRegistry' do
       registry = VerifiedDouble.registry
-      expect(registry).to be_an(Array)
+      expect(registry).to be_an(described_class::RecordedMethodSignatureRegistry)
     end
 
     it "is memoized" do
@@ -29,15 +29,12 @@ describe VerifiedDouble do
 
     let(:subject) { described_class.of_instance(class_name) }
 
-    it "adds the SimpleDouble version of the double to the registry" do
+    it "extends the double with VerifiedDouble::CanRecordInteractions" do
       subject = described_class.of_instance(class_name)
-      expect(described_class.registry.last).to be_a(VerifiedDouble::SimpleDouble)
-      expect(described_class.registry.last.internal).to eq(subject)
-      expect(described_class.registry.last.class_name).to eq(class_name)
-
+      expect(subject).to be_a(VerifiedDouble::CanRecordInteractions)
     end
 
-    it "returns the double (not the SimpleDouble version)" do
+    it "returns the double" do
       subject = described_class.of_instance(class_name)
       expect(subject).to be_a(RSpec::Mocks::Mock)
     end
@@ -59,12 +56,12 @@ describe VerifiedDouble do
 
     let(:subject) { described_class.of_class(class_name) }
 
-    it "adds a SimpleDouble version of the double to the registry" do
+    it "extends the double with VerifiedDouble::CanRecordInteractions" do
       the_double = subject
-      expect(described_class.registry.last.internal).to eq(the_double)
+      expect(the_double).to be_a(VerifiedDouble::CanRecordInteractions)
     end
 
-    it "returns the double (not the SimpleDouble version)" do
+    it "returns the double" do
       subject = described_class.of_class(class_name)
       expect(subject).to eq(class_name.constantize)
     end
@@ -105,13 +102,12 @@ describe VerifiedDouble do
   describe ".record(double)" do
     let(:the_double){ double }
 
-    it "adds the SimpleDouble version of the double to the registry" do
+    it "extends the double with VerifiedDouble::CanRecordInteractions" do
       described_class.record(the_double)
-      expect(described_class.registry.last).to be_a(VerifiedDouble::SimpleDouble)
-      expect(described_class.registry.last.internal).to eq(the_double)
+      expect(the_double).to be_a(VerifiedDouble::CanRecordInteractions)
     end
 
-    it "returns the double (not the SimpleDouble version)" do
+    it "returns the double" do
       expect(described_class.record(the_double)).to eq(the_double)
     end
   end

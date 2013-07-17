@@ -9,42 +9,31 @@ describe VerifiedDouble::MethodSignaturesReport do
 
   describe "#set_registered_signatures", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#set_registered_signatures()=>VerifiedDouble::MethodSignaturesReport' do
 
-    let(:recording_double_1) {
-      double('VerifiedDouble::RecordingDouble',
-        method_signatures: [method_signature_1]) }
-
-    let(:recording_double_2) {
-      double('VerifiedDouble::RecordingDouble',
-        method_signatures: [method_signature_2]) }
-
     let(:method_signature_1) {
       VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'to_s') }
 
     let(:method_signature_2) {
       VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'inspect') }
 
-    let(:verified_double_module){ VerifiedDouble.of_class('VerifiedDouble') }
+    let(:verified_double_module){
+      stub_const('VerifiedDouble', Class.new, transfer_nested_constants: true) }
 
-    context "with multiple recording doubles in the registry" do
-      it "maps and flattens the method signatures of the recording doubles" do
+    context "with multiple signatures in the registry" do
+      it "sets the signatures from the registry" do
         verified_double_module
           .should_receive(:registry)
-          .and_return([recording_double_1, recording_double_2])
+          .and_return([method_signature_1, method_signature_2])
 
-        expect(subject.set_registered_signatures.registered_signatures).to eq(
+        expect(subject.set_registered_signatures.registered_signatures.to_a).to eq(
           [method_signature_1, method_signature_2])
       end
     end
 
-    context "with recording doubles with duplicate signatures" do
-      let(:recording_double_2) {
-        double('VerifiedDouble::RecordingDouble',
-          method_signatures: [method_signature_1]) }
-
+    context "with duplicate signatures" do
       it "returns distinct method signatures" do
         verified_double_module
           .should_receive(:registry)
-          .and_return([recording_double_1, recording_double_2])
+          .and_return([method_signature_1, method_signature_1])
 
         expect(subject.set_registered_signatures.registered_signatures).to eq([method_signature_1])
       end
@@ -187,7 +176,7 @@ describe VerifiedDouble::MethodSignaturesReport do
 
   describe "#set_verified_signatures_from_matchers", verifies_contract: 'VerifiedDouble::MethodSignaturesReport#set_verified_signatures_from_matchers()=>VerifiedDouble::MethodSignaturesReport' do
     let(:verified_double_module){
-      VerifiedDouble.of_class('VerifiedDouble') }
+      stub_const('VerifiedDouble', Class.new, transfer_nested_constants: true) }
 
     let(:method_signature) { VerifiedDouble::MethodSignature.new }
 

@@ -39,7 +39,7 @@ module VerifiedDouble
     end
 
     def set_registered_signatures
-      @registered_signatures = VerifiedDouble.registry.map(&:method_signatures).flatten.uniq
+      @registered_signatures = VerifiedDouble.registry.uniq
       self
     end
 
