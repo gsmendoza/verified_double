@@ -37,18 +37,10 @@ describe VerifiedDouble::MethodSignature::Value do
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RspecDoubleValue) }
     end
 
-    context "where content is an class recording double" do
-      let(:class_double){ stub_const(class_name, Class.new, transfer_nested_constants: true) }
-      let(:content) { VerifiedDouble::RecordingDouble.new(class_double, class_name) }
+    context "where content is a class double" do
+      let(:content){ stub_const(class_name, Class.new, transfer_nested_constants: true) }
 
-      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RecordingDoubleClassValue) }
-    end
-
-    context "where content is an instance recording double" do
-      let(:some_instance_double){ double('Dummy') }
-      let(:content) { VerifiedDouble::RecordingDouble.new(some_instance_double, class_name) }
-
-      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::InstanceDoubleValue) }
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::ClassValue) }
     end
 
     context "where content is an instance" do

@@ -54,33 +54,4 @@ describe VerifiedDouble::SimpleDouble do
       end
     end
   end
-
-  describe "#method_signatures" do
-    it "are the method signatures of the double's expected methods" do
-      some_instance_double.stub(:save).with(force: true).and_return(false)
-      some_instance_double.should_receive(:children).and_return(double('Dummy'))
-
-      simple_instance_double = described_class.new(some_instance_double)
-
-      expect(simple_instance_double.method_signatures.map(&:recommended_verified_signature).map(&:to_s))
-        .to eq([
-          "Dummy#save(Hash)=>VerifiedDouble::Boolean",
-          "Dummy#children()=>Dummy"])
-
-      some_instance_double.children
-    end
-  end
-
-  describe "#method_doubles" do
-    it "returns SimplifiedMethodDoubles from the internal's method doubles" do
-      some_instance_double.stub(:save).with(force: true).and_return(false)
-
-      simple_instance_double = described_class.new(some_instance_double)
-      expect(simple_instance_double.method_doubles).to have(1).method_double
-      expect(simple_instance_double.method_doubles[0]).to be_a(described_class::MethodDouble)
-      expect(simple_instance_double.method_doubles[0].internal).to be_a(Hash)
-      expect(simple_instance_double.method_doubles[0].double).to eq(simple_instance_double)
-      expect(simple_instance_double.method_doubles[0].method).to eq(:save)
-    end
-  end
 end
