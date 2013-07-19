@@ -1,3 +1,8 @@
+0.3.0 - 2013-07-19
+
+* [#17] Major refactor: extend RSpec doubles with VerifiedDouble recording
+  functionality. No more need for RecordingDouble.
+
 0.2.0 - 2013-06-30
 ------------------
 
