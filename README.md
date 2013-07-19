@@ -38,7 +38,7 @@ Caveats
 
 VerifiedDouble is still in its infancy, but I hope it's usable for the most common cases.
 
-* If you check the RelishApp doc, the gem only supports a subset of rspec-mock's API. Please post an issue at http://github.com/gsmendoza/verified_double if you need support for any particular rspec-mock API.
+* With 0.3.0, doubles created with VerifiedDouble.of_instance() and VerifiedDouble.of_class() are now VerifiedDouble-extended RSpec doubles. As a result, they should function like regular RSpec doubles. However, VerifiedDouble still doesn't have support for [RSpec mock argument matchers](https://github.com/rspec/rspec-mocks#argument-matchers). Please post an issue at http://github.com/gsmendoza/verified_double if you need support for any particular rspec-mock API.
 
 * The [method documentation](http://rubydoc.info/gems/verified_double) is pretty empty at this point :p I'm planning to use yard-spec to document the methods but that gem doesn't support rspec context blocks. I'll try to work on that soon.
 
