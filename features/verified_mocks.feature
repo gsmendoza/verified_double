@@ -36,6 +36,8 @@ Feature: 01. Verified mocks
       require 'main'
 
       RSpec.configure do |config|
+        config.include VerifiedDouble::Helpers
+        
         config.after :suite do
           VerifiedDouble.report_unverified_signatures(self)
         end
@@ -52,7 +54,7 @@ Feature: 01. Verified mocks
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
@@ -82,7 +84,7 @@ Feature: 01. Verified mocks
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
@@ -107,7 +109,7 @@ Feature: 01. Verified mocks
         let(:class_double) { VerifiedDouble.of_class('Collaborator') }
 
         it "tests something" do
-          class_double.should_receive(:some_method).with(input).and_return(output)
+          expect(class_double).to receive(:some_method).with(input).and_return(output)
           ObjectUnderTest.do_something(input)
         end
       end
@@ -137,7 +139,7 @@ Feature: 01. Verified mocks
         let(:class_double) { VerifiedDouble.of_class('Collaborator') }
 
         it "tests something" do
-          class_double.should_receive(:some_method).with(input).and_return(output)
+          expect(class_double).to receive(:some_method).with(input).and_return(output)
           ObjectUnderTest.new.do_something(class_double, input)
         end
       end

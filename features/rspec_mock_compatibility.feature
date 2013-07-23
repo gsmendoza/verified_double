@@ -64,7 +64,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).once.and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).once.and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
@@ -83,7 +83,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).twice.and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).twice.and_return(output)
           ObjectUnderTest.new.do_something_twice(instance_double, input)
         end
       end
@@ -102,7 +102,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).exactly(1).and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).exactly(1).and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
@@ -121,7 +121,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).at_least(:once).and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).at_least(:once).and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
@@ -140,7 +140,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).at_most(:once).and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).at_most(:once).and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
@@ -159,7 +159,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).any_number_of_times.and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).any_number_of_times.and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
@@ -179,7 +179,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).and_raise(error)
+          expect(instance_double).to receive(:some_method).with(input).and_raise(error)
           expect { ObjectUnderTest.new.do_something(instance_double, input) }.to raise_error(error)
         end
       end
@@ -209,7 +209,7 @@ Feature: 03. Rspec Mock compatibility
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).and_throw(error_symbol)
+          expect(instance_double).to receive(:some_method).with(input).and_throw(error_symbol)
           expect { ObjectUnderTest.new.do_something(instance_double, input) }.to throw_symbol(error_symbol)
         end
       end

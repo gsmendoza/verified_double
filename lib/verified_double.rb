@@ -12,10 +12,13 @@ require 'verified_double/method_signature/class_value'
 require 'verified_double/method_signature/rspec_double_value'
 require 'verified_double/method_signatures_report'
 require 'verified_double/parse_method_signature'
+require 'verified_double/rspec_mocks_syntax_overrides'
 require 'verified_double/recorded_method_signature'
 require 'verified_double/recorded_method_signature_registry'
 require 'verified_double/simple_double'
 require 'verified_double/stack_frame'
+
+require 'verified_double/helpers'
 
 module VerifiedDouble
   extend RSpec::Mocks::ExampleMethods

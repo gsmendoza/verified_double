@@ -1,5 +1,7 @@
 module VerifiedDouble
   class RecordedMethodSignatureRegistry < Array
+    attr_accessor :current_double
+
     def add_method_signature(a_double, method)
       simple_double = SimpleDouble.new(a_double)
 

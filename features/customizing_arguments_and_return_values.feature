@@ -38,7 +38,7 @@ Feature: 04. Customizing arguments and return values
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.should_receive(:some_method).with(input).and_return(output)
+          expect(instance_double).to receive(:some_method).with(input).and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
