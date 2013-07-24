@@ -40,7 +40,7 @@ Feature: 02. Verified stubs
         let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
 
         it "tests something" do
-          instance_double.stub(:some_method).with(input).and_return(output)
+          allow(instance_double).to receive(:some_method).with(input).and_return(output)
           ObjectUnderTest.new.do_something(instance_double, input)
         end
       end
