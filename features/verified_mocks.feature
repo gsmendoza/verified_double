@@ -35,8 +35,13 @@ Feature: 01. Verified mocks
       require 'verified_double'
       require 'main'
 
+
       RSpec.configure do |config|
-        config.include VerifiedDouble::Helpers
+        config.include VerifiedDouble::Matchers
+
+        config.before do
+          self.extend VerifiedDouble::RSpecMocksSyntaxOverrides
+        end
         
         config.after :suite do
           VerifiedDouble.report_unverified_signatures(self)

@@ -11,5 +11,9 @@ module VerifiedDouble
         method: method.to_s,
         stack_frame: StackFrame.new(caller(0).detect{|line| line =~ /_spec\.rb/ }))
     end
+
+    def add_method_signature_with_current_double(method)
+      add_method_signature(current_double, method)
+    end
   end
 end

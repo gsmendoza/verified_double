@@ -1,5 +1,10 @@
 module VerifiedDouble
   module RSpecMocksSyntaxOverrides
+    def allow(*args)
+      VerifiedDouble.registry.current_double = args[0]
+      super(*args)
+    end
+
     def expect(*args)
       VerifiedDouble.registry.current_double = args[0]
       super(*args)
