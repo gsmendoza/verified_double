@@ -7,7 +7,7 @@ VerifiedDouble is a gem for verifying rspec mocks. The gem works similar to [rsp
 For example, let's say I mocked the created_at method of a model like this:
 
     item = VerifiedDouble.of_instance(Item)
-    item.should_receive(:created_at).and_return(Time.now)
+    expect(item).to receive(:created_at).and_return(Time.now)
 
 When running the tests, the gem looks for a "contract test" tagged with the method's signature. This test should ensure that calling #created_at on Item will return a Time object.
 

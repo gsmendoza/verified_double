@@ -79,7 +79,7 @@ describe VerifiedDouble do
         .stub_chain(:class, :descendant_filtered_examples)
         .and_return([])
 
-      method_signatures_report_class.should_receive(:new).and_return(method_signatures_report)
+      expect(method_signatures_report_class).to receive(:new).and_return(method_signatures_report)
 
       actions = [
         :set_registered_signatures,
