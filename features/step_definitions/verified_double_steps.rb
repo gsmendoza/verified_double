@@ -2,14 +2,6 @@ Given /^the following classes:$/ do |string|
   write_file 'lib/main.rb', string
 end
 
-Given /^the test suite includes VerifiedDouble to verify doubles with accessor methods:$/ do |string|
-  write_file 'spec/spec_helper.rb', string
-end
-
-Given /^the test suite has an after\(:suite\) callback asking VerifiedDouble to report unverified doubles:$/ do |string|
-  write_file 'spec/spec_helper.rb', string
-end
-
 Given /^a test that uses VerifiedDouble to mock an object:$/ do |string|
   write_file 'spec/main_spec.rb', string
 end
@@ -28,6 +20,10 @@ end
 
 Given /^the test suite has a contract test for the stub:$/ do |string|
   write_file 'spec/contract_test_for_main_spec.rb', string
+end
+
+Given(/^the test suite is configured to use VerifiedDouble:$/) do |string|
+  write_file 'spec/spec_helper.rb', string
 end
 
 Given /^the test suite does not have a contract test for the mock$/ do

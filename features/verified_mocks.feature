@@ -30,23 +30,11 @@ Feature: 01. Verified mocks
       end
       """
 
-    And the test suite has an after(:suite) callback asking VerifiedDouble to report unverified doubles:
+    And the test suite is configured to use VerifiedDouble:
       """
       require 'verified_double'
+      require 'verified_double/rspec_configuration'
       require 'main'
-
-
-      RSpec.configure do |config|
-        config.include VerifiedDouble::Matchers
-
-        config.before do
-          self.extend VerifiedDouble::RSpecMocksSyntaxOverrides
-        end
-        
-        config.after :suite do
-          VerifiedDouble.report_unverified_signatures(self)
-        end
-      end
       """
 
   Scenario: Verified instance doubles

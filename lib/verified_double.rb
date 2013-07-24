@@ -18,8 +18,6 @@ require 'verified_double/recorded_method_signature_registry'
 require 'verified_double/simple_double'
 require 'verified_double/stack_frame'
 
-require 'verified_double/helpers'
-
 module VerifiedDouble
   extend RSpec::Mocks::ExampleMethods
 

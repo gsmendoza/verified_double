@@ -5,10 +5,6 @@ describe VerifiedDouble::RSpecMocksSyntaxOverrides do
   let(:some_method){ 'fake_to_s' }
   let(:some_result){ 'result' }
 
-  before do
-    self.extend VerifiedDouble::RSpecMocksSyntaxOverrides 
-  end
-
   describe "#expect(*args)" do
     it "sets the registry's current_double to the first arg", verifies_contract: 'Object#fake_to_s()=>String' do
       expect(VerifiedDouble.registry.last).to_not eq(a_double)

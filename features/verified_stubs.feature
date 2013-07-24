@@ -23,17 +23,13 @@ Feature: 02. Verified stubs
       end
       """
 
-    And the test suite has an after(:suite) callback asking VerifiedDouble to report unverified doubles:
+    And the test suite is configured to use VerifiedDouble:
       """
       require 'verified_double'
+      require 'verified_double/rspec_configuration'
       require 'main'
-
-      RSpec.configure do |config|
-        config.after :suite do
-          VerifiedDouble.report_unverified_signatures(self)
-        end
-      end
       """
+
   Scenario: Stubbed doubles
     Given a test that uses VerifiedDouble to stub an object:
       """

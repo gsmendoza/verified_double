@@ -15,28 +15,21 @@ describe VerifiedDouble::MethodSignaturesReport do
     let(:method_signature_2) {
       VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'inspect') }
 
+    let(:registry){
+      double(:registry, 'current_double=' => nil) }
+
     let(:verified_double_module){
       stub_const('VerifiedDouble', Class.new, transfer_nested_constants: true) }
 
-    context "with multiple signatures in the registry" do
-      it "sets the signatures from the registry" do
-        verified_double_module
-          .should_receive(:registry)
-          .and_return([method_signature_1, method_signature_2])
+    it "sets distinct signatures from the registry" do
+      verified_double_module
+        .should_receive(:registry)
+        .at_least(:once)
+        .and_return(registry)
 
-        expect(subject.set_registered_signatures.registered_signatures.to_a).to eq(
-          [method_signature_1, method_signature_2])
-      end
-    end
+      registry.should_receive(:uniq).and_return(registry)
 
-    context "with duplicate signatures" do
-      it "returns distinct method signatures" do
-        verified_double_module
-          .should_receive(:registry)
-          .and_return([method_signature_1, method_signature_1])
-
-        expect(subject.set_registered_signatures.registered_signatures).to eq([method_signature_1])
-      end
+      expect(subject.set_registered_signatures.registered_signatures).to eq(registry)
     end
   end
 
@@ -180,7 +173,14 @@ describe VerifiedDouble::MethodSignaturesReport do
 
     let(:method_signature) { VerifiedDouble::MethodSignature.new }
 
+    let(:registry){
+      double(:registry, 'current_double=' => nil) }
+
     it "works" do
+      verified_double_module
+        .should_receive(:registry)
+        .and_return(registry)
+    
       verified_double_module
         .should_receive(:verified_signatures_from_matchers)
         .and_return([method_signature])

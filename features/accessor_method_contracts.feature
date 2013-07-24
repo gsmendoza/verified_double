@@ -19,18 +19,11 @@ Feature: 05. Accessor method contracts
       end
       """
 
-    And the test suite includes VerifiedDouble to verify doubles with accessor methods:
+    And the test suite is configured to use VerifiedDouble:
       """
       require 'verified_double'
+      require 'verified_double/rspec_configuration'
       require 'main'
-
-      RSpec.configure do |config|
-        config.include VerifiedDouble::Matchers
-
-        config.after :suite do
-          VerifiedDouble.report_unverified_signatures(self)
-        end
-      end
       """
 
   Scenario: Verifying mocks for accessors
