@@ -16,7 +16,7 @@ describe VerifiedDouble::MethodSignaturesReport do
       VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'inspect') }
 
     let(:registry){
-      double(:registry, 'current_double=' => nil) }
+      double(:registry, 'current_double' => nil, 'current_double=' => nil) }
 
     let(:verified_double_module){
       stub_const('VerifiedDouble', Class.new, transfer_nested_constants: true) }
@@ -27,7 +27,7 @@ describe VerifiedDouble::MethodSignaturesReport do
         .at_least(:once)
         .and_return(registry)
 
-      registry.should_receive(:uniq).and_return(registry)
+      expect(registry).to receive(:uniq).and_return(registry)
 
       expect(subject.set_registered_signatures.registered_signatures).to eq(registry)
     end
@@ -59,13 +59,13 @@ describe VerifiedDouble::MethodSignaturesReport do
         .stub_chain(:class, :descendant_filtered_examples)
         .and_return([example_with_verified_contract_tag, example_without_verified_contract_tag])
 
-      parse_method_signature_service_class
-        .should_receive(:new)
+      expect(parse_method_signature_service_class)
+        .to receive(:new)
         .with(example_with_verified_contract_tag.metadata[:verifies_contract])
         .and_return(parse_method_signature_service)
 
-      parse_method_signature_service
-        .should_receive(:execute)
+      expect(parse_method_signature_service)
+        .to receive(:execute)
         .and_return(method_signature)
 
       expect(subject.verified_signatures_from_tags).to eq([method_signature])
@@ -76,14 +76,14 @@ describe VerifiedDouble::MethodSignaturesReport do
         .stub_chain(:class, :descendant_filtered_examples)
         .and_return([example_with_verified_contract_tag, example_with_verified_contract_tag])
 
-      parse_method_signature_service_class
-        .should_receive(:new)
+      expect(parse_method_signature_service_class)
+        .to receive(:new)
         .with(example_with_verified_contract_tag.metadata[:verifies_contract])
         .at_least(:once)
         .and_return(parse_method_signature_service)
 
-      parse_method_signature_service
-        .should_receive(:execute)
+      expect(parse_method_signature_service)
+        .to receive(:execute)
         .and_return(method_signature)
 
       expect(subject.verified_signatures_from_tags).to eq([method_signature])
@@ -161,7 +161,7 @@ describe VerifiedDouble::MethodSignaturesReport do
           "2. #{unverified_signatures[1].recommended_verified_signature}",
           "For more info, check out https://www.relishapp.com/gsmendoza/verified-double." ]
 
-        subject.should_receive(:puts).with(lines.join("\n\n"))
+        expect(subject).to receive(:puts).with(lines.join("\n\n"))
         subject.output_unverified_signatures
       end
     end
@@ -174,15 +174,16 @@ describe VerifiedDouble::MethodSignaturesReport do
     let(:method_signature) { VerifiedDouble::MethodSignature.new }
 
     let(:registry){
-      double(:registry, 'current_double=' => nil) }
+      double(:registry, 'current_double' => nil, 'current_double=' => nil) }
 
     it "works" do
       verified_double_module
         .should_receive(:registry)
+        .at_least(:once)
         .and_return(registry)
     
-      verified_double_module
-        .should_receive(:verified_signatures_from_matchers)
+      expect(verified_double_module)
+        .to receive(:verified_signatures_from_matchers)
         .and_return([method_signature])
 
       expect(subject.set_verified_signatures_from_matchers.verified_signatures_from_matchers)

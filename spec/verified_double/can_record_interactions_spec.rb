@@ -9,7 +9,7 @@ describe VerifiedDouble::CanRecordInteractions do
 
   describe "#should_receive(method)" do
     it "appends a new method signature with the method to the registry", verifies_contract: 'Object#mocked_fake_to_s()' do
-      expect(a_double).to receive(:mocked_fake_to_s)
+      a_double.should_receive(:mocked_fake_to_s)
       expect(VerifiedDouble.registry.last.method).to eq('mocked_fake_to_s')
       a_double.mocked_fake_to_s
     end

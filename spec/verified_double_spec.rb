@@ -90,8 +90,8 @@ describe VerifiedDouble do
         :output_unverified_signatures]
 
       actions.each do |action|
-        method_signatures_report
-          .should_receive(action)
+        expect(method_signatures_report)
+          .to receive(action)
           .and_return(method_signatures_report)
       end
 
