@@ -46,19 +46,13 @@ Feature: 02. Verified stubs
       end
       """
 
-    And the test suite has a contract test for the stub:
-      """
-      require 'spec_helper'
-
-      describe 'Collaborator' do
-        it "tests something", verifies_contract: 'Collaborator#some_method(SomeInput)=>SomeOutput' do
-          # do nothing
-        end
-      end
-      """
-
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method(SomeInput)=>SomeOutput
+      """
 
   Scenario: Stubbed doubles using hash syntax
     Given a test that uses VerifiedDouble to stub an object:
@@ -75,16 +69,10 @@ Feature: 02. Verified stubs
       end
       """
 
-    And the test suite has a contract test for the stub:
-      """
-      require 'spec_helper'
-
-      describe 'Collaborator' do
-        it "tests something", verifies_contract: 'Collaborator#some_method=>SomeOutput' do
-          # do nothing
-        end
-      end
-      """
-
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method()=>SomeOutput
+      """

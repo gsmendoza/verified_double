@@ -31,17 +31,6 @@ Feature: 03. Rspec Mock compatibility
       end
       """
 
-    And the test suite has a contract test for the mock:
-      """
-      require 'spec_helper'
-
-      describe 'Collaborator' do
-        it "tests something", verifies_contract: 'Collaborator#some_method(SomeInput)=>SomeOutput' do
-          # do nothing
-        end
-      end
-      """
-
     And the test suite is configured to use VerifiedDouble:
       """
       require 'verified_double'
@@ -66,7 +55,13 @@ Feature: 03. Rspec Mock compatibility
       """
 
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method(SomeInput)=>SomeOutput
+      """
 
   Scenario: twice
     Given a test that uses VerifiedDouble to mock an object:
@@ -85,7 +80,13 @@ Feature: 03. Rspec Mock compatibility
       """
 
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method(SomeInput)=>SomeOutput
+      """
 
   Scenario: exactly
     Given a test that uses VerifiedDouble to mock an object:
@@ -104,7 +105,12 @@ Feature: 03. Rspec Mock compatibility
       """
 
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method(SomeInput)=>SomeOutput
+      """
 
   Scenario: at_least
     Given a test that uses VerifiedDouble to mock an object:
@@ -123,7 +129,12 @@ Feature: 03. Rspec Mock compatibility
       """
 
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method(SomeInput)=>SomeOutput
+      """
 
   Scenario: at_most
     Given a test that uses VerifiedDouble to mock an object:
@@ -142,26 +153,12 @@ Feature: 03. Rspec Mock compatibility
       """
 
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
-
-  Scenario: any_number_of_times
-    Given a test that uses VerifiedDouble to mock an object:
+    Then I should be informed that the mock is unverified:
       """
-      require 'spec_helper'
-      describe ObjectUnderTest do
-        let(:input) { SomeInput.new }
-        let(:output) { SomeOutput.new }
-        let(:instance_double) { VerifiedDouble.of_instance('Collaborator') }
+      The following mocks are not verified:
 
-        it "tests something" do
-          expect(instance_double).to receive(:some_method).with(input).any_number_of_times.and_return(output)
-          ObjectUnderTest.new.do_something(instance_double, input)
-        end
-      end
+      1. Collaborator#some_method(SomeInput)=>SomeOutput
       """
-
-    When I run the test suite
-    Then I should not see any output saying the stub is unverified
 
   Scenario: and_raise
     Given a test that uses VerifiedDouble to mock an object:
@@ -180,19 +177,14 @@ Feature: 03. Rspec Mock compatibility
       end
       """
 
-    And the test suite has a contract test for the mock:
-      """
-      require 'spec_helper'
-
-      describe 'Collaborator' do
-        it "tests something", verifies_contract: 'Collaborator#some_method(SomeInput)' do
-          # do nothing
-        end
-      end
-      """
-
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method(SomeInput)
+      """
+
   Scenario: and_throw
     Given a test that uses VerifiedDouble to mock an object:
       """
@@ -210,16 +202,10 @@ Feature: 03. Rspec Mock compatibility
       end
       """
 
-    And the test suite has a contract test for the mock:
-      """
-      require 'spec_helper'
-
-      describe 'Collaborator' do
-        it "tests something", verifies_contract: 'Collaborator#some_method(SomeInput)' do
-          # do nothing
-        end
-      end
-      """
-
     When I run the test suite
-    Then I should not see any output saying the stub is unverified
+    Then I should be informed that the mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. Collaborator#some_method(SomeInput)
+      """
