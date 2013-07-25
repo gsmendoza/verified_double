@@ -19,13 +19,18 @@ If this test does not exist, the gem will complain that the mock is not verified
 
 I got the idea from http://www.infoq.com/presentations/integration-tests-scam, an old (2009) talk that still has some fresh insights on dealing with API changes in your mocked tests.
 
+Usage
+-----
+
+Require `verified_double/rspec_configuration` in your spec_helper.rb to integrate VerifiedDouble with rspec.
+
 You can learn more about using the gem at https://www.relishapp.com/gsmendoza/verified-double.
 
 Actively tested against
 -----------------------
 
 * Ruby 1.9.3
-* RSpec 2.13
+* RSpec 2.14
 
 
 Alternatives
