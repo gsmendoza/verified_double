@@ -48,6 +48,11 @@ describe VerifiedDouble do
       it "stubs the methods of the instance" do
         expect(subject.send(stubbed_method)).to eq(assumed_output)
       end
+
+      it "appends a new method signature with the method to the registry" do
+        expect(VerifiedDouble.registry.last).to be_a(VerifiedDouble::RecordedMethodSignature)
+        expect(VerifiedDouble.registry.last.method).to eq(stubbed_method.to_s)
+      end
     end
   end
 

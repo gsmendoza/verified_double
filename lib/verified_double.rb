@@ -27,7 +27,14 @@ module VerifiedDouble
   end
 
   def self.of_instance(*args)
-    VerifiedDouble.record(double(*args))
+    d = double(*args)
+    if args[1]
+      args[1].each do |method, return_value|
+        VerifiedDouble.registry.add_method_signature(d, method)
+        VerifiedDouble.registry.last.return_values = [MethodSignature::Value.from(return_value)]
+      end
+    end
+    VerifiedDouble.record(d)
   end
 
   def self.record(a_double)
