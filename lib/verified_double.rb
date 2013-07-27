@@ -36,7 +36,6 @@ module VerifiedDouble
           class_name: simple_double.class_name,
           method_operator: simple_double.method_operator,
           method: method.to_s,
-          stack_frame: StackFrame.new(caller(0).detect{|line| line =~ /_spec\.rb/ }),
           return_values: [MethodSignature::Value.from(return_value)])
 
         # Ensures that the stub doesn't become the last method signature.

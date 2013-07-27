@@ -8,8 +8,7 @@ module VerifiedDouble
       self << RecordedMethodSignature.new(
         class_name: simple_double.class_name,
         method_operator: simple_double.method_operator,
-        method: method.to_s,
-        stack_frame: StackFrame.new(caller(0).detect{|line| line =~ /_spec\.rb/ }))
+        method: method.to_s)
     end
 
     def add_method_signature_with_current_double(method)

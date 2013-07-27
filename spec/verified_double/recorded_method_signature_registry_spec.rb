@@ -17,12 +17,6 @@ describe VerifiedDouble::RecordedMethodSignatureRegistry do
       expect(method_signature.method_operator).to eq('#')
       expect(method_signature.method).to eq(method.to_s)
     end
-
-    it "records the stack frames of the double's caller" do
-      subject.add_method_signature(a_double, method)
-      expect(subject.first.stack_frame.to_s)
-        .to include("./spec/verified_double/recorded_method_signature_registry_spec.rb")
-    end
   end
 
   describe "#add_method_signature_with_current_double(method)" do
