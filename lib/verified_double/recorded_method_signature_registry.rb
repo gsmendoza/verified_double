@@ -4,11 +4,7 @@ module VerifiedDouble
 
     def add_method_signature(a_double, method)
       simple_double = SimpleDouble.new(a_double)
-
-      self << RecordedMethodSignature.new(
-        class_name: simple_double.class_name,
-        method_operator: simple_double.method_operator,
-        method: method.to_s)
+      self << simple_double.build_recorded_method_signature(method)
     end
 
     def add_method_signature_with_current_double(method)

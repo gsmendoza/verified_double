@@ -54,4 +54,16 @@ describe VerifiedDouble::SimpleDouble do
       end
     end
   end
+
+  describe "#build_record_method_signature(method)" do
+    let(:method){ :fake_to_s }
+    subject { simple_instance_double.build_recorded_method_signature(method) }
+
+    it "returns a method signature for the method of the double" do
+      expect(subject).to be_a(VerifiedDouble::RecordedMethodSignature)
+      expect(subject.class_name).to eq(class_name)
+      expect(subject.method_operator).to eq('#')
+      expect(subject.method).to eq(method.to_s)
+    end
+  end
 end

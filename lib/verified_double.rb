@@ -32,13 +32,8 @@ module VerifiedDouble
 
     if args[1]
       args[1].each do |method, return_value|
-        method_signature = RecordedMethodSignature.new(
-          class_name: simple_double.class_name,
-          method_operator: simple_double.method_operator,
-          method: method.to_s,
-          return_values: [MethodSignature::Value.from(return_value)])
-
-        # Ensures that the stub doesn't become the last method signature.
+        method_signature = simple_double.build_recorded_method_signature(method)
+        method_signature.return_values = [MethodSignature::Value.from(return_value)]
         VerifiedDouble.registry.insert 0, method_signature
       end
     end
