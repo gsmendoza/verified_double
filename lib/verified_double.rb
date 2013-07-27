@@ -28,10 +28,19 @@ module VerifiedDouble
 
   def self.of_instance(*args)
     d = double(*args)
+    simple_double = SimpleDouble.new(d)
+
     if args[1]
       args[1].each do |method, return_value|
-        VerifiedDouble.registry.add_method_signature(d, method)
-        VerifiedDouble.registry.last.return_values = [MethodSignature::Value.from(return_value)]
+        method_signature = RecordedMethodSignature.new(
+          class_name: simple_double.class_name,
+          method_operator: simple_double.method_operator,
+          method: method.to_s,
+          stack_frame: StackFrame.new(caller(0).detect{|line| line =~ /_spec\.rb/ }),
+          return_values: [MethodSignature::Value.from(return_value)])
+
+        # Ensures that the stub doesn't become the last method signature.
+        VerifiedDouble.registry.insert 0, method_signature
       end
     end
     VerifiedDouble.record(d)

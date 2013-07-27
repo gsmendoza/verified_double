@@ -49,9 +49,31 @@ describe VerifiedDouble do
         expect(subject.send(stubbed_method)).to eq(assumed_output)
       end
 
-      it "appends a new method signature with the method to the registry" do
-        expect(VerifiedDouble.registry.last).to be_a(VerifiedDouble::RecordedMethodSignature)
-        expect(VerifiedDouble.registry.last.method).to eq(stubbed_method.to_s)
+      it "inserts a new method signature with the method as the FIRST item of the registry" do
+        # so that it doesn't interfere with the current VerifiedDouble.registry.last
+        subject
+        expect(VerifiedDouble.registry.first).to be_a(VerifiedDouble::RecordedMethodSignature)
+        expect(VerifiedDouble.registry.first.method).to eq(stubbed_method.to_s)
+      end
+
+      context "where the double is an value of an expectation" do
+        let(:parent){ VerifiedDouble.of_instance('Object') }
+        let(:parent_method){ :parent_method }
+        let(:parent_output){ :parent_output }
+        
+        it "should not interfere with the method signature recording of the expectation", verifies_contract: 'Object#parent_method(Object)=>Symbol' do
+          expect(parent).to receive(parent_method).with(subject).and_return(parent_output)
+
+          parent_method_signature =
+            VerifiedDouble.registry
+              .select{|s|
+                s.args[0].try(:content) == subject &&
+                s.return_values[0].try(:content) == parent_output }
+
+          expect(parent_method_signature).to be_present
+
+          parent.send(:parent_method, subject)
+        end
       end
     end
   end
