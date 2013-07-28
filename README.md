@@ -22,7 +22,15 @@ I got the idea from http://www.infoq.com/presentations/integration-tests-scam, a
 Usage
 -----
 
-Require `verified_double/rspec_configuration` in your spec_helper.rb to integrate VerifiedDouble with rspec.
+Require `verified_double/rspec_configuration` in your spec_helper.rb to integrate VerifiedDouble with rspec. If you want verified_double to be run only as needed, create a separate verified_spec_helper.rb:
+
+    # spec/verified_spec_helper.rb
+    require 'spec_helper'
+    require 'verified_double/rspec_configuration'
+
+And require it when running rspec:
+
+    rspec -r ./spec/verified_spec_helper.rb
 
 You can learn more about using the gem at https://www.relishapp.com/gsmendoza/verified-double.
 
@@ -41,8 +49,6 @@ Alternatives
 Caveats
 -------
 
-VerifiedDouble is still in its infancy, but I hope it's usable for the most common cases.
-
 * With 0.3.0, doubles created with VerifiedDouble.of_instance() and VerifiedDouble.of_class() are now VerifiedDouble-extended RSpec doubles. As a result, they should function like regular RSpec doubles. However, VerifiedDouble still doesn't have support for [RSpec mock argument matchers](https://github.com/rspec/rspec-mocks#argument-matchers). Please post an issue at http://github.com/gsmendoza/verified_double if you need support for any particular rspec-mock API.
 
 * The [method documentation](http://rubydoc.info/gems/verified_double) is pretty empty at this point :p I'm planning to use yard-spec to document the methods but that gem doesn't support rspec context blocks. I'll try to work on that soon.
@@ -50,4 +56,4 @@ VerifiedDouble is still in its infancy, but I hope it's usable for the most comm
 Special thanks
 --------------
 
-To [Thomas Sinclair](https://twitter.com/anathematic) and [Inner Core Designs](http://icdesign.com.au) for sponsoring this gem :)
+To [Thomas Sinclair](https://twitter.com/anathematic) of [Inner Core Designs](http://icdesign.com.au) for sponsoring this gem :)

@@ -1,4 +1,21 @@
+0.4.0 - 2013-07-28
+------------------
+
+[#7] Pass: I should be able to use the RSpec's new expect syntax with
+  VerifiedDouble.
+
+[#7] Require verified_double/rspec_configuration in order to integrate
+  verified_double with rspec.
+
+[#18] Fix Scenario: stubbed doubles using hash syntax are no longer being
+  recorded after 0.3.0.
+
+[#19] Ensure: if `VerifiedDouble.of_instance(class_name, method_stubs={})` is
+  used a argument or return value value of an expectation, then it should
+  not interfere with the method signature recording of the expectation.
+
 0.3.0 - 2013-07-19
+------------------
 
 * [#17] Major refactor: extend RSpec doubles with VerifiedDouble recording
   functionality. No more need for RecordingDouble.
