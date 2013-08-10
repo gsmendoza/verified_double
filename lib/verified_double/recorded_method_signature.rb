@@ -3,7 +3,7 @@ module VerifiedDouble
     attr_reader :stack_frame
 
     def initialize(*args)
-      @stack_frame = StackFrame.new(caller(0).detect{|line| line =~ /_spec\.rb/ })
+      @stack_frame = StackFrame.new(caller(0).detect{|line| line =~ %r{/spec/} })
       super(*args)
     end
 

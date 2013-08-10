@@ -24,4 +24,6 @@ describe VerifiedDouble::RecordedMethodSignature do
         .to include("./spec/verified_double/recorded_method_signature_spec.rb")
     end
   end
+  
+  it_behaves_like "it can initialize its stack frame within a shared example"
 end
