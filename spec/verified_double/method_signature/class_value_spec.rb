@@ -10,8 +10,13 @@ describe VerifiedDouble::MethodSignature::ClassValue do
     end
 
     context "where the value and other do not have the same content" do
-      let(:other) { described_class.new(Object) }
+      let(:other) { described_class.new(Float) }
       it { expect(subject.belongs_to?(other)).to be_false }
+    end
+
+    context "where the other is a Class" do
+      let(:other) { described_class.new(Class) }
+      it { expect(subject.belongs_to?(other)).to be_true }
     end
   end
 

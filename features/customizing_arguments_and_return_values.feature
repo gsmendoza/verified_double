@@ -98,3 +98,31 @@ Feature: 04. Customizing arguments and return values
 
     When I run the test suite
     Then I should not see any output saying the mock is unverified
+
+  Scenario: class double as return value
+    Given a test that uses VerifiedDouble to mock an object:
+      """
+      require 'spec_helper'
+      describe ObjectUnderTest do
+        let(:collaborator_class){ VerifiedDouble.of_class('Collaborator') }
+        let(:instance_double) { VerifiedDouble.of_instance('Collaborator', class: collaborator_class) }
+
+        it "tests something" do
+          expect(instance_double.class).to eq(collaborator_class)
+        end
+      end
+      """
+
+    And the test suite has a contract test for the mock:
+      """
+      require 'spec_helper'
+
+      describe 'Collaborator' do
+        it "tests something", verifies_contract: 'Collaborator#class()=>Class' do
+          # do nothing
+        end
+      end
+      """
+
+    When I run the test suite
+    Then I should not see any output saying the mock is unverified
