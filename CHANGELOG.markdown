@@ -1,3 +1,10 @@
+0.4.1 - 2013-08-17
+------------------
+
+[#20] Fix: Cannot get stack frame of method signature recorded within a shared example.
+
+[#21] Fix: Class double return value cannot be verified.
+
 0.4.0 - 2013-07-28
 ------------------
 
