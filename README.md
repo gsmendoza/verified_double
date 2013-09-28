@@ -56,4 +56,4 @@ Caveats
 Special thanks
 --------------
 
-To [Thomas Sinclair](https://twitter.com/anathematic) of [Inner Core Designs](http://icdesign.com.au) for sponsoring this gem :)
+To [Thomas Sinclair](https://twitter.com/anathematic) of [Inner Core Designs](http://icdesign.com.au) for initially sponsoring this gem.
