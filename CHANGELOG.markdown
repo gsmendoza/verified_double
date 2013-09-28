@@ -1,3 +1,8 @@
+0.4.2 - 2013-09-28
+------------------
+
+[#25] Fix: cannot mock is_a? on a VerifiedDouble instance double.
+
 0.4.1 - 2013-08-17
 ------------------
 
