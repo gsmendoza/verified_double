@@ -6,7 +6,7 @@ module VerifiedDouble
       def self.from(content)
         if content == true || content == false
           BooleanValue.new(content)
-        elsif content.is_a?(RSpec::Mocks::Mock)
+        elsif content.respond_to?(:verified_instance_double?) && content.verified_instance_double?
           RspecDoubleValue.new(content)
         elsif content.is_a?(Module)
           ClassValue.new(content)

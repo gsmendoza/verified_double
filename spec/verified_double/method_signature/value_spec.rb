@@ -33,8 +33,24 @@ describe VerifiedDouble::MethodSignature::Value do
     end
 
     context "where content is an rspec mock" do
-      let(:content) { double(:stuff) }
+      let(:content) { VerifiedDouble.of_instance('Stuff') }
       it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RspecDoubleValue) }
+    end
+
+    context "where content is an rspec mock mocking its is_a? method",
+      verifies_contract: 'Stuff#is_a?(Class)=>VerifiedDouble::Boolean' do
+
+      let(:content) { VerifiedDouble.of_instance('Stuff') }
+
+      before do
+        expect(content).to receive(:is_a?).with(Object).and_return(true)
+      end
+
+      it { expect(subject).to be_a(VerifiedDouble::MethodSignature::RspecDoubleValue) }
+
+      after do
+        content.is_a?(Object)
+      end
     end
 
     context "where content is a class double" do

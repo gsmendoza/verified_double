@@ -5,8 +5,8 @@ describe VerifiedDouble::SimpleDouble do
   end
 
   let(:class_name) {  'Dummy' }
-  let(:some_instance_double) { double(class_name) }
-  let(:some_class_double) { stub_const(class_name, Class.new) }
+  let(:some_instance_double) { VerifiedDouble.of_instance(class_name) }
+  let(:some_class_double) { VerifiedDouble.of_class(class_name) }
 
   let(:simple_instance_double) { described_class.new(some_instance_double) }
   let(:simple_class_double) { described_class.new(some_class_double) }

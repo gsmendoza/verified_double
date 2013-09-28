@@ -3,6 +3,8 @@ require 'rspec/mocks'
 
 require 'verified_double/boolean'
 require 'verified_double/can_record_interactions'
+require 'verified_double/is_a_class_double'
+require 'verified_double/is_an_instance_double'
 require 'verified_double/matchers'
 require 'verified_double/method_signature'
 require 'verified_double/method_signature/value'
@@ -23,11 +25,15 @@ module VerifiedDouble
 
   def self.of_class(class_name, options = {})
     options[:transfer_nested_constants] = true if options[:transfer_nested_constants].nil?
-    VerifiedDouble.record(stub_const(class_name, Class.new, options))
+    d = stub_const(class_name, Class.new, options)
+    d.extend(VerifiedDouble::IsAClassDouble)
+    VerifiedDouble.record(d)
   end
 
   def self.of_instance(*args)
     d = double(*args)
+    d.extend(VerifiedDouble::IsAnInstanceDouble)
+
     simple_double = SimpleDouble.new(d)
 
     if args[1]

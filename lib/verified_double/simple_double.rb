@@ -19,7 +19,7 @@ module VerifiedDouble
     end
 
     def class_double?
-      internal.is_a?(Class)
+      internal.respond_to?(:verified_class_double?)
     end
 
     def method_operator

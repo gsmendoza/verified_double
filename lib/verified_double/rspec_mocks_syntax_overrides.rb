@@ -1,7 +1,7 @@
 module VerifiedDouble
   module RSpecMocksSyntaxOverrides
     def allow(*args)
-      if args[0].is_a?(VerifiedDouble::CanRecordInteractions)
+      if args[0].respond_to?(:can_record_interactions?)
         VerifiedDouble.registry.current_double = args[0]
       else
         VerifiedDouble.registry.current_double = nil
@@ -10,7 +10,7 @@ module VerifiedDouble
     end
 
     def expect(*args)
-      if args[0].is_a?(VerifiedDouble::CanRecordInteractions)
+      if args[0].respond_to?(:can_record_interactions?)
         VerifiedDouble.registry.current_double = args[0]
       else
         VerifiedDouble.registry.current_double = nil
