@@ -67,6 +67,36 @@ Feature: 01. Verified mocks
     When I run the test suite
     Then I should not see any output saying the mock is unverified
 
+  Scenario: Instantiating an instance double with a class argument
+    Given a test that uses VerifiedDouble to mock an object:
+      """
+      require 'spec_helper'
+      describe ObjectUnderTest do
+        let(:input) { SomeInput.new }
+        let(:output) { SomeOutput.new }
+        let(:instance_double) { VerifiedDouble.of_instance(Collaborator) }
+
+        it "tests something" do
+          expect(instance_double).to receive(:some_method).with(input).and_return(output)
+          ObjectUnderTest.new.do_something(instance_double, input)
+        end
+      end
+      """
+
+    And the test suite has a contract test for the mock:
+      """
+      require 'spec_helper'
+
+      describe 'Collaborator' do
+        it "tests something", verifies_contract: 'Collaborator#some_method(SomeInput)=>SomeOutput' do
+          # do nothing
+        end
+      end
+      """
+
+    When I run the test suite
+    Then I should not see any output saying the mock is unverified
+
   Scenario: Unverified instance doubles
     Given a test that uses VerifiedDouble to mock an object:
       """
@@ -100,6 +130,36 @@ Feature: 01. Verified mocks
         let(:input) { SomeInput.new }
         let(:output) { SomeOutput.new }
         let(:class_double) { VerifiedDouble.of_class('Collaborator') }
+
+        it "tests something" do
+          expect(class_double).to receive(:some_method).with(input).and_return(output)
+          ObjectUnderTest.do_something(input)
+        end
+      end
+      """
+
+    And the test suite has a contract test for the mock:
+      """
+      require 'spec_helper'
+
+      describe 'Collaborator' do
+        it "tests something", verifies_contract: 'Collaborator.some_method(SomeInput)=>SomeOutput' do
+          # do nothing
+        end
+      end
+      """
+
+    When I run the test suite
+    Then I should not see any output saying the mock is unverified
+
+  Scenario: Instantiating a class double with a class argument
+    Given a test that uses VerifiedDouble to mock a class:
+      """
+      require 'spec_helper'
+      describe ObjectUnderTest do
+        let(:input) { SomeInput.new }
+        let(:output) { SomeOutput.new }
+        let(:class_double) { VerifiedDouble.of_class(Collaborator) }
 
         it "tests something" do
           expect(class_double).to receive(:some_method).with(input).and_return(output)

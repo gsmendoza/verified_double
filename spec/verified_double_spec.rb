@@ -60,7 +60,7 @@ describe VerifiedDouble do
         let(:parent){ VerifiedDouble.of_instance('Object') }
         let(:parent_method){ :parent_method }
         let(:parent_output){ :parent_output }
-        
+
         it "should not interfere with the method signature recording of the expectation", verifies_contract: 'Object#parent_method(Object)=>Symbol' do
           expect(parent).to receive(parent_method).with(subject).and_return(parent_output)
 
@@ -91,6 +91,15 @@ describe VerifiedDouble do
     it "returns the double" do
       subject = described_class.of_class(class_name)
       expect(subject).to eq(class_name.constantize)
+    end
+
+    context "where the argument is a class" do
+      let(:argument) { Object }
+
+      it "returns the double" do
+        subject = described_class.of_class(argument)
+        expect(subject.name).to eq(argument.name)
+      end
     end
   end
 

@@ -15,7 +15,7 @@ module VerifiedDouble
 
 
     def class_name
-      class_double? ? internal.name : internal.instance_variable_get('@name')
+      class_double? ? internal.name : internal.instance_variable_get('@name').to_s
     end
 
     def class_double?

@@ -24,6 +24,14 @@ describe VerifiedDouble::SimpleDouble do
       end
     end
 
+    context "where the internal double is a double with a class value" do
+      let(:some_instance_double) { VerifiedDouble.of_instance(Dummy) }
+
+      it "is the name of the class represented by the double" do
+        expect(simple_instance_double.class_name).to eq('Dummy')
+      end
+    end
+
     context "where the internal double is a stub const" do
       it "is the name of the class represented by the class double" do
         expect(simple_class_double.class_name).to eq(class_name)
