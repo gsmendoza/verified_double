@@ -1,28 +1,33 @@
+0.4.3 - 2013-10-22
+------------------
+
+* [#26] Allow class to be passed to `of_instance` and `of_class`.
+
 0.4.2 - 2013-09-28
 ------------------
 
-[#25] Fix: cannot mock is_a? on a VerifiedDouble instance double.
+* [#25] Fix: cannot mock is_a? on a VerifiedDouble instance double.
 
 0.4.1 - 2013-08-17
 ------------------
 
-[#20] Fix: Cannot get stack frame of method signature recorded within a shared example.
+* [#20] Fix: Cannot get stack frame of method signature recorded within a shared example.
 
-[#21] Fix: Class double return value cannot be verified.
+* [#21] Fix: Class double return value cannot be verified.
 
 0.4.0 - 2013-07-28
 ------------------
 
-[#7] Pass: I should be able to use the RSpec's new expect syntax with
+* [#7] Pass: I should be able to use the RSpec's new expect syntax with
   VerifiedDouble.
 
-[#7] Require verified_double/rspec_configuration in order to integrate
+* [#7] Require verified_double/rspec_configuration in order to integrate
   verified_double with rspec.
 
-[#18] Fix Scenario: stubbed doubles using hash syntax are no longer being
+* [#18] Fix Scenario: stubbed doubles using hash syntax are no longer being
   recorded after 0.3.0.
 
-[#19] Ensure: if `VerifiedDouble.of_instance(class_name, method_stubs={})` is
+* [#19] Ensure: if `VerifiedDouble.of_instance(class_name, method_stubs={})` is
   used a argument or return value value of an expectation, then it should
   not interfere with the method signature recording of the expectation.
 
