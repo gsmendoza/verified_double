@@ -6,6 +6,10 @@ Given /^a test that uses VerifiedDouble to mock an object:$/ do |string|
   write_file 'spec/main_spec.rb', string
 end
 
+Given(/^a test that uses VerifiedDouble to mock any instance of the class:$/) do |string|
+  write_file 'spec/main_spec.rb', string
+end
+
 Given /^a test that uses VerifiedDouble to stub an object:$/ do |string|
   write_file 'spec/main_spec.rb', string
 end

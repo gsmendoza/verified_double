@@ -23,6 +23,12 @@ require 'verified_double/stack_frame'
 module VerifiedDouble
   extend RSpec::Mocks::ExampleMethods
 
+  def self.any_instance_of(klass)
+    d = klass.any_instance
+    d.extend(VerifiedDouble::IsAnInstanceDouble)
+    VerifiedDouble.record(d)
+  end
+
   def self.of_class(class_value, options = {})
     options[:transfer_nested_constants] = true if options[:transfer_nested_constants].nil?
     d = stub_const(class_value.to_s, Class.new, options)

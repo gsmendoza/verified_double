@@ -206,3 +206,4 @@ Feature: 01. Verified mocks
 
       1. Collaborator.some_method(SomeInput)=>SomeOutput
       """
+

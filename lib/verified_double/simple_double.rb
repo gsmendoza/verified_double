@@ -15,11 +15,27 @@ module VerifiedDouble
 
 
     def class_name
-      class_double? ? internal.name : internal.instance_variable_get('@name').to_s
+      if class_double?
+        internal.name
+      elsif instance_double?
+        internal.instance_variable_get('@name').to_s
+      elsif any_instance_double?
+        internal.instance_variable_get('@klass').to_s
+      else
+        raise
+      end
+    end
+
+    def any_instance_double?
+      !! internal.instance_variable_get('@klass')
     end
 
     def class_double?
       internal.respond_to?(:verified_class_double?)
+    end
+
+    def instance_double?
+      !! internal.instance_variable_get('@name')
     end
 
     def method_operator
