@@ -3,6 +3,7 @@ require 'rspec/mocks'
 
 require 'verified_double/boolean'
 require 'verified_double/can_record_interactions'
+require 'verified_double/example_metadata'
 require 'verified_double/is_a_class_double'
 require 'verified_double/is_an_instance_double'
 require 'verified_double/matchers'

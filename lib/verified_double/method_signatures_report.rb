@@ -49,13 +49,23 @@ module VerifiedDouble
     end
 
     def set_verified_signatures_from_tags(nested_example_group)
-      @verified_signatures_from_tags = nested_example_group
+      examples = nested_example_group
         .class
         .descendant_filtered_examples
-        .map{|example| example.metadata[:verifies_contract] }
+
+      verified_signatures = examples.map do |example|
+        if example.metadata[:verifies_contract] == true
+          ExampleMetadata.new(example.metadata).verified_signature
+        else
+          example.metadata[:verifies_contract]
+        end
+      end
+
+      @verified_signatures_from_tags = verified_signatures
         .compact
         .uniq
         .map{|method_signature_string| ParseMethodSignature.new(method_signature_string).execute }
+
       self
     end
   end
