@@ -1,4 +1,4 @@
-Feature: 10. Describe contract
+Feature: 30. Describe contract
   Scenario: Specify contact in describe string
     Given the following classes:
 

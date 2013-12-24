@@ -1,4 +1,4 @@
-Feature: 06. Any instance
+Feature: 60. Any instance
 
   Background:
     Given the following classes:

@@ -1,4 +1,4 @@
-Feature: 02. Verified stubs
+Feature: 20. Verified stubs
   As a developer
   I want to be informed if the stubs I use are verified by contract tests
 

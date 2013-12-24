@@ -1,4 +1,4 @@
-Feature: 03. Rspec Mock compatibility
+Feature: 70. Rspec Mock compatibility
   As a developer
   I want VerifiedDouble to work with Rspec Mock API
 
