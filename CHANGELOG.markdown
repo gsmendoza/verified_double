@@ -1,3 +1,11 @@
+0.5.0 - 2013-12-24
+------------------
+
+* [#27] Implement describe "contract" feature.
+
+* [#22] Add VerifiedDouble.any_instance_of(klass). Warning: only works with
+  should_receive. Doesn't work with expect/allow syntax.
+
 0.4.3 - 2013-10-22
 ------------------
 
