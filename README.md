@@ -7,6 +7,7 @@ VerifiedDouble is a gem for verifying rspec mocks. The gem works similar to [rsp
 For example, if I mock the created_at method of a model like this:
 
 ```ruby
+# spec/foo_spec.rb
 item = VerifiedDouble.of_instance(Item)
 expect(item).to receive(:created_at).and_return(Time.now)
 ```
@@ -46,6 +47,7 @@ And require it when running rspec:
 Let's look again at the example above:
 
 ```ruby
+# spec/foo_spec.rb
 item = VerifiedDouble.of_instance(Item)
 expect(item).to receive(:created_at).and_return(Time.now)
 ```
@@ -91,6 +93,10 @@ end
 Since VerifiedDouble relies on tags to link mocks and contracts together, you'll
 need to run the tests containing the contracts along with tests with the mocks in
 order to clear the VerifiedDouble warnings.
+
+```
+rspec spec/foo_spec.rb spec/item_spec.rb
+```
 
 ## Booleans
 
