@@ -7,6 +7,7 @@ VerifiedDouble is a gem for verifying rspec mocks. The gem works similar to [rsp
 For example, if I mock the created_at method of a model like this:
 
 ```ruby
+# spec/foo_spec.rb
 item = VerifiedDouble.of_instance(Item)
 expect(item).to receive(:created_at).and_return(Time.now)
 ```
@@ -14,6 +15,7 @@ expect(item).to receive(:created_at).and_return(Time.now)
 When I run the tests, the gem will look for a "contract test" tagged with the method's signature. This test should ensure that calling `#created_at` on Item will return a Time object.
 
 ```ruby
+# spec/item_spec.rb
 describe Item do
   describe '#created_at()=>Time', verifies_contract: true do
     it "tests something" do
@@ -46,6 +48,7 @@ And require it when running rspec:
 Let's look again at the example above:
 
 ```ruby
+# spec/foo_spec.rb
 item = VerifiedDouble.of_instance(Item)
 expect(item).to receive(:created_at).and_return(Time.now)
 ```
@@ -63,6 +66,7 @@ The following mocks are not verified:
 You can then tag the test for `Item#created_at()=>Time` with the method signature:
 
 ```ruby
+# spec/item_spec.rb
 describe Item do
   describe '#created_at()=>Time', verifies_contract: true do
     it "tests something" do
@@ -81,6 +85,7 @@ Take note that:
 If your testing style doesn't follow these conventions, you can tag the test with the whole method signature:
 
 ```ruby
+# spec/item_spec.rb
 describe 'Item' do
   it "has a creation timestamp", verifies_contract: `Item#created_at()=>Time` do
     #...
@@ -91,6 +96,10 @@ end
 Since VerifiedDouble relies on tags to link mocks and contracts together, you'll
 need to run the tests containing the contracts along with tests with the mocks in
 order to clear the VerifiedDouble warnings.
+
+```
+rspec spec/foo_spec.rb spec/item_spec.rb
+```
 
 ## Booleans
 
