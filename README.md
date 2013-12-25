@@ -76,7 +76,7 @@ Take note that:
 
 1. The described class must be a class, not a string.
 2. The described method must start with `#` if its an instance method and `.` if it's a class method.
-3. You need to add the add the `verifies_contract: true` tag to the test.
+3. You need to add the `verifies_contract: true` tag to the test.
 
 If your testing style doesn't follow these conventions, you can tag the test with the whole method signature:
 
