@@ -1,3 +1,8 @@
+0.5.2 - 2013-12-26
+------------------
+
+* Fix: use of is_s? in expect method causes tests to fail.
+
 0.5.1 - 2013-12-25
 ------------------
 
