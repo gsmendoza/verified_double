@@ -1,3 +1,8 @@
+0.5.3 - 2013-12-26
+------------------
+
+* Implement any_instance mocks with new RSpec syntax.
+
 0.5.2 - 2013-12-26
 ------------------
 
