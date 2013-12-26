@@ -5,6 +5,7 @@ require 'verified_double/boolean'
 require 'verified_double/can_record_interactions'
 require 'verified_double/example_metadata'
 require 'verified_double/is_a_class_double'
+require 'verified_double/is_an_any_instance_double'
 require 'verified_double/is_an_instance_double'
 require 'verified_double/matchers'
 require 'verified_double/method_signature'
@@ -26,7 +27,7 @@ module VerifiedDouble
 
   def self.any_instance_of(klass)
     d = klass.any_instance
-    d.extend(VerifiedDouble::IsAnInstanceDouble)
+    d.extend(VerifiedDouble::IsAnAnyInstanceDouble)
     VerifiedDouble.record(d)
   end
 

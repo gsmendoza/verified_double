@@ -11,7 +11,7 @@ module VerifiedDouble
 
     def expect(*args)
       if args[0].respond_to?(:can_record_interactions?)
-        if args[0].is_a?(RSpec::Mocks::AnyInstance::Recorder)
+        if args[0].respond_to?(:verified_any_instance_double?)
           raise "VerifiedDouble.any_instance_of doesn't support yet Rspec's " \
             "expect/allow syntax. Please use should_receive."
         else
