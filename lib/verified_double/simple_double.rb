@@ -20,14 +20,14 @@ module VerifiedDouble
       elsif instance_double?
         internal.instance_variable_get('@name').to_s
       elsif any_instance_double?
-        internal.instance_variable_get('@klass').to_s
+        internal.instance_variable_get('@target').to_s
       else
-        raise
+        raise 'Unable to handle internal #{internal.inspect}'
       end
     end
 
     def any_instance_double?
-      !! internal.instance_variable_get('@klass')
+      !! internal.instance_variable_get('@target')
     end
 
     def class_double?

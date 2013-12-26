@@ -5,7 +5,6 @@ require 'verified_double/boolean'
 require 'verified_double/can_record_interactions'
 require 'verified_double/example_metadata'
 require 'verified_double/is_a_class_double'
-require 'verified_double/is_an_any_instance_double'
 require 'verified_double/is_an_instance_double'
 require 'verified_double/matchers'
 require 'verified_double/method_signature'
@@ -25,10 +24,16 @@ require 'verified_double/stack_frame'
 module VerifiedDouble
   extend RSpec::Mocks::ExampleMethods
 
-  def self.any_instance_of(klass)
-    d = klass.any_instance
-    d.extend(VerifiedDouble::IsAnAnyInstanceDouble)
-    VerifiedDouble.record(d)
+  def self.allow_any_instance_of(klass)
+    super(klass).tap do |d|
+      VerifiedDouble.registry.current_double = VerifiedDouble.record(d)
+    end
+  end
+
+  def self.expect_any_instance_of(klass)
+    super(klass).tap do |d|
+      VerifiedDouble.registry.current_double = VerifiedDouble.record(d)
+    end
   end
 
   def self.of_class(class_value, options = {})

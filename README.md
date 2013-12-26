@@ -153,12 +153,12 @@ end
 Aside for instance and class doubles, VerifiedDouble also supports `any_instance` mocks:
 
 ```
-VerifiedDouble.any_instance_of(Collaborator)
-  .should_receive(:some_method).with(input).and_return(output)
-```
+VerifiedDouble.expect_any_instance_of(Collaborator)
+  .to receive(:some_method).with(input).and_return(output)
 
-You'll need to use should_receive for `any_instance` mocks. I still have to figure
-out how to make it work with RSpec's `expect_any_instance_of` syntax :p
+VerifiedDouble.allow_any_instance_of(Collaborator)
+  .to receive(:some_method).with(input).and_return(output)
+```
 
 ## Complete documentation
 

@@ -15,15 +15,6 @@ describe VerifiedDouble::RSpecMocksSyntaxOverrides do
       end
     end
 
-    context "where the double arg is an RSpec::Mocks::AnyInstance::Recorder" do
-      let(:a_double) { VerifiedDouble.of_instance('Object') }
-
-      it "should tell the user to use should_receive instead" do
-        expect(lambda { expect(VerifiedDouble.any_instance_of(Object)) })
-          .to raise_error
-      end
-    end
-
     context "where the double arg does not record VerifiedDouble interactions" do
       let(:a_double) { double('Object') }
 

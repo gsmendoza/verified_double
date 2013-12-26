@@ -14,6 +14,10 @@ Given /^a test that uses VerifiedDouble to stub an object:$/ do |string|
   write_file 'spec/main_spec.rb', string
 end
 
+Given(/^a test that uses VerifiedDouble to stub any instance of the class:$/) do |string|
+  write_file 'spec/main_spec.rb', string
+end
+
 Given /^a test that uses VerifiedDouble to mock a class:$/ do |string|
   write_file 'spec/main_spec.rb', string
 end
@@ -34,11 +38,20 @@ Given /^the test suite does not have a contract test for the mock$/ do
   # do nothing
 end
 
+Given /^the test suite does not have a contract test for the stub$/ do
+  # do nothing
+end
+
 When /^I run the test suite$/ do
   run_simple(unescape("rspec"), false)
 end
 
 Then /^I should be informed that the mock is unverified:$/ do |string|
+  assert_partial_output(string, all_output)
+  assert_success('pass')
+end
+
+Then /^I should be informed that the stub is unverified:$/ do |string|
   assert_partial_output(string, all_output)
   assert_success('pass')
 end
