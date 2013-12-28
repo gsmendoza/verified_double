@@ -148,9 +148,19 @@ describe Collaborator do
 end
 ```
 
-## Any Instance mocks
+## Partial and Any Instance mocks
 
-Aside for instance and class doubles, VerifiedDouble also supports `any_instance` mocks:
+Aside for instance and class doubles, VerifiedDouble also supports partial and "any instance" mocks:
+
+```
+object_under_test = ObjectUnderTest.new
+
+expect(VerifiedDouble.wrap(object_under_test))
+  .to receive(:some_method).with(input).and_return(output)
+
+expect(VerifiedDouble.wrap(ObjectUnderTest))
+  .to receive(:some_method).with(input).and_return(output)
+```
 
 ```
 VerifiedDouble.expect_any_instance_of(Collaborator)
