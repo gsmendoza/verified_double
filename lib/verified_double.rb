@@ -37,7 +37,9 @@ module VerifiedDouble
   end
 
   def self.of_class(class_value, options = {})
-    options[:transfer_nested_constants] = true if options[:transfer_nested_constants].nil?
+    if options[:transfer_nested_constants].nil?
+      options[:transfer_nested_constants] = true
+    end
     d = stub_const(class_value.to_s, Class.new, options)
     d.extend(VerifiedDouble::IsAClassDouble)
     VerifiedDouble.record(d)
@@ -81,5 +83,14 @@ module VerifiedDouble
   def self.verified_signatures_from_matchers
     @verified_signatures_from_matchers ||= []
   end
-end
 
+  def self.wrap(object)
+    if object.is_a?(Module)
+      object.extend(VerifiedDouble::IsAClassDouble)
+    else
+      object.extend(VerifiedDouble::IsAnInstanceDouble)
+    end
+
+    VerifiedDouble.record(object)
+  end
+end

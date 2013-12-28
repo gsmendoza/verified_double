@@ -22,7 +22,7 @@ module VerifiedDouble
       elsif any_instance_double?
         internal.instance_variable_get('@target').to_s
       else
-        raise 'Unable to handle internal #{internal.inspect}'
+        internal.class.name
       end
     end
 
