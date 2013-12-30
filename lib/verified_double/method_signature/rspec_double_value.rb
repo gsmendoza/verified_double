@@ -6,7 +6,8 @@ module VerifiedDouble
       end
 
       def content_class
-        content.instance_variable_get('@name').constantize
+        result = content.instance_variable_get('@name')
+        result.is_a?(Class) ? result : result.constantize
       end
     end
   end
