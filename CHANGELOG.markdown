@@ -1,3 +1,8 @@
+0.6.1 - 2013-12-30
+------------------
+
+* Fix RspecDoubleValue#content_class: Method fails if the value is an double of an inheriting class.
+
 0.6.0 - 2013-12-28
 ------------------
 
