@@ -1,3 +1,10 @@
+0.7.0 - 2014-01-22
+------------------
+
+* Fix: `VerifiedDouble.wrap(klass)` doesn't get cleared after the test where it
+  is called. As a result, expectations of `klass` in other tests gets recorded by
+  VerifiedDouble.
+
 0.6.1 - 2013-12-30
 ------------------
 
