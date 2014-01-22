@@ -160,3 +160,59 @@ Feature: 65. Partial mocks
 
       1. ObjectUnderTest.some_method(SomeInput)=>SomeOutput
       """
+
+  Scenario: Class partial mocks should not affect the class in other tests
+    Given the following classes:
+      """
+      class ObjectUnderTest
+        def self.do_something(input)
+          some_method(input)
+          another_method(input)
+        end
+
+        def self.another_method(input)
+          SomeOutput.new
+        end
+
+        def self.some_method(input)
+          SomeOutput.new
+        end
+      end
+
+      class SomeInput
+      end
+
+      class SomeOutput
+      end
+      """
+
+    And a test that uses both rspec-mock and VerifiedDouble to partially mock a class:
+      """
+      require 'spec_helper'
+      describe ObjectUnderTest do
+        let(:input) { SomeInput.new }
+        let(:output) { SomeOutput.new }
+
+        it "tests something with VerifiedDouble partial mock" do
+          expect(VerifiedDouble.wrap(ObjectUnderTest))
+            .to receive(:some_method).with(input).and_return(output)
+
+          ObjectUnderTest.do_something(input)
+        end
+
+        it "tests something with rspec-mock" do
+          expect(ObjectUnderTest)
+            .to receive(:another_method).with(input).and_return(output)
+
+          ObjectUnderTest.do_something(input)
+        end
+      end
+      """
+
+    When I run the test suite
+    Then I should be informed that only the VerifiedDouble.wrap mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. ObjectUnderTest.some_method(SomeInput)=>SomeOutput
+      """

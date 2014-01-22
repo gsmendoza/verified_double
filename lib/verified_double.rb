@@ -30,6 +30,10 @@ module VerifiedDouble
     end
   end
 
+  def self.doubles_in_current_test
+    @doubles_in_current_test ||= []
+  end
+
   def self.expect_any_instance_of(klass)
     super(klass).tap do |d|
       VerifiedDouble.registry.current_double = VerifiedDouble.record(d)
@@ -62,6 +66,7 @@ module VerifiedDouble
   end
 
   def self.record(a_double)
+    VerifiedDouble.doubles_in_current_test << a_double
     a_double.extend(VerifiedDouble::CanRecordInteractions)
     a_double
   end

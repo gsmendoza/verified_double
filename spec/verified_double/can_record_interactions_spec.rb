@@ -4,6 +4,7 @@ describe VerifiedDouble::CanRecordInteractions do
   let(:a_double){ double('Object') }
 
   before do
+    VerifiedDouble.doubles_in_current_test << a_double
     a_double.extend(VerifiedDouble::CanRecordInteractions)
   end
 
@@ -13,7 +14,7 @@ describe VerifiedDouble::CanRecordInteractions do
       expect(VerifiedDouble.registry.last.method).to eq('mocked_fake_to_s')
       a_double.mocked_fake_to_s
     end
-  end    
+  end
 
   describe "#stub(method)" do
     it "appends a new method signature with the method to the registry", verifies_contract: 'Object#stubbed_fake_to_s()' do

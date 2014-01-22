@@ -22,6 +22,7 @@ describe VerifiedDouble::MethodSignaturesReport do
       stub_const('VerifiedDouble', Class.new, transfer_nested_constants: true) }
 
     it "sets distinct signatures from the registry" do
+      verified_double_module.stub(:doubles_in_current_test).and_return([])
       verified_double_module
         .should_receive(:registry)
         .at_least(:once)
@@ -177,11 +178,13 @@ describe VerifiedDouble::MethodSignaturesReport do
       double(:registry, 'current_double' => nil, 'current_double=' => nil) }
 
     it "works" do
+      verified_double_module.stub(:doubles_in_current_test).and_return([])
+
       verified_double_module
         .should_receive(:registry)
         .at_least(:once)
         .and_return(registry)
-    
+
       expect(verified_double_module)
         .to receive(:verified_signatures_from_matchers)
         .and_return([method_signature])

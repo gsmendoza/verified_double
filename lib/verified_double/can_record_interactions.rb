@@ -5,18 +5,20 @@ module VerifiedDouble
       super(*return_values)
     end
 
-    def can_record_interactions?
-      true
-    end
-
     def should_receive(*args)
       VerifiedDouble.registry.add_method_signature(self, args[0])
-      super(*args).tap {|result| result.extend(VerifiedDouble::CanRecordInteractions) }
+      super(*args).tap do |result|
+        VerifiedDouble.doubles_in_current_test << result
+        result.extend(VerifiedDouble::CanRecordInteractions)
+      end
     end
 
     def stub(*args)
       VerifiedDouble.registry.add_method_signature(self, args[0])
-      super(*args).tap {|result| result.extend(VerifiedDouble::CanRecordInteractions) }
+      super(*args).tap do |result|
+        VerifiedDouble.doubles_in_current_test << result
+        result.extend(VerifiedDouble::CanRecordInteractions)
+      end
     end
 
     def with(*args)
