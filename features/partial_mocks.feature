@@ -216,3 +216,63 @@ Feature: 65. Partial mocks
 
       1. ObjectUnderTest.some_method(SomeInput)=>SomeOutput
       """
+
+    And I should not be informed that the rspec mock is unverified:
+      """
+      ObjectUnderTest#another_method(SomeInput)=>SomeOutput
+      """
+
+  Scenario: Class partial mocks should not any_instance_of mocks in other tests
+    Given the following classes:
+      """
+      class ObjectUnderTest
+        def self.do_something
+          some_class_method
+          new.some_instance_method
+        end
+
+        def self.some_instance_method
+          SomeOutput.new
+        end
+
+        def self.some_class_method
+          SomeOutput.new
+        end
+      end
+
+      class SomeOutput
+      end
+      """
+
+    And a test that uses both any_instance_of and VerifiedDouble to mock a class:
+      """
+      require 'spec_helper'
+      describe ObjectUnderTest do
+        let(:output) { SomeOutput.new }
+
+        let(:object_under_test_class) { VerifiedDouble.wrap(ObjectUnderTest) }
+
+        it "tests something with VerifiedDouble partial mock and allow_any_instance_of" do
+          expect(object_under_test_class)
+            .to receive(:some_class_method).and_return(output)
+
+          allow_any_instance_of(ObjectUnderTest)
+            .to receive(:some_instance_method).and_return(output)
+
+          ObjectUnderTest.do_something
+        end
+      end
+      """
+
+    When I run the test suite
+    Then I should be informed that only the VerifiedDouble.wrap mock is unverified:
+      """
+      The following mocks are not verified:
+
+      1. ObjectUnderTest.some_class_method()=>SomeOutput
+      """
+
+    And I should not be informed that the any_instance_of mock is unverified:
+      """
+      ObjectUnderTest.some_instance_method()=>SomeOutput
+      """

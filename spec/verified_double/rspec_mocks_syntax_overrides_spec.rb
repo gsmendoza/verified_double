@@ -62,6 +62,13 @@ describe VerifiedDouble::RSpecMocksSyntaxOverrides do
 
         a_double.fake_to_s
       end
+
+      it 'should not add the result to the current test doubles' do
+        expect(a_double).to receive(some_method).and_return(some_result)
+        expect(VerifiedDouble.doubles_in_current_test).to eq([a_double])
+
+        a_double.fake_to_s
+      end
     end
 
     context "where the current double is not recording VerifiedDouble interactions" do

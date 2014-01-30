@@ -15,8 +15,13 @@ describe VerifiedDouble::MethodSignaturesReport do
     let(:method_signature_2) {
       VerifiedDouble::MethodSignature.new(class_name: 'Object', method_operator: '#', method: 'inspect') }
 
-    let(:registry){
-      double(:registry, 'current_double' => nil, 'current_double=' => nil) }
+    let(:registry) do
+      double(:registry,
+        'current_double' => nil,
+        'current_double=' => nil,
+        'update_current_double' => nil
+      )
+    end
 
     let(:verified_double_module){
       stub_const('VerifiedDouble', Class.new, transfer_nested_constants: true) }
@@ -174,8 +179,13 @@ describe VerifiedDouble::MethodSignaturesReport do
 
     let(:method_signature) { VerifiedDouble::MethodSignature.new }
 
-    let(:registry){
-      double(:registry, 'current_double' => nil, 'current_double=' => nil) }
+    let(:registry) do
+      double(:registry,
+        'current_double' => nil,
+        'current_double=' => nil,
+        'update_current_double' => nil
+      )
+    end
 
     it "works" do
       verified_double_module.stub(:doubles_in_current_test).and_return([])
