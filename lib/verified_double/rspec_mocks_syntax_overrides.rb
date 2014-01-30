@@ -24,7 +24,6 @@ module VerifiedDouble
       if VerifiedDouble.registry.current_double
         VerifiedDouble.registry.add_method_signature_with_current_double(args[0])
         super(*args).tap do |result|
-          VerifiedDouble.doubles_in_current_test << result
           result.extend(VerifiedDouble::CanRecordInteractions)
         end
       else

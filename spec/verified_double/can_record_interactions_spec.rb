@@ -14,12 +14,24 @@ describe VerifiedDouble::CanRecordInteractions do
       expect(VerifiedDouble.registry.last.method).to eq('mocked_fake_to_s')
       a_double.mocked_fake_to_s
     end
+
+    it 'does not add the result to the current test doubles' do
+      a_double.should_receive(:mocked_fake_to_s)
+      expect(VerifiedDouble.doubles_in_current_test).to eq([a_double])
+      a_double.mocked_fake_to_s
+    end
   end
 
   describe "#stub(method)" do
     it "appends a new method signature with the method to the registry", verifies_contract: 'Object#stubbed_fake_to_s()' do
-      allow(a_double).to receive(:stubbed_fake_to_s)
+      a_double.stub(:stubbed_fake_to_s)
       expect(VerifiedDouble.registry.last.method).to eq('stubbed_fake_to_s')
+    end
+
+    it 'does not add the result to the current test doubles' do
+      a_double.stub(:mocked_fake_to_s)
+      expect(VerifiedDouble.doubles_in_current_test).to eq([a_double])
+      a_double.mocked_fake_to_s
     end
   end
 
