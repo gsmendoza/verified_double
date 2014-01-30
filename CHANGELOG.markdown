@@ -1,3 +1,8 @@
+0.8.0 - 2014-01-30
+------------------
+
+* Fix: any_instance_of calls should not be recorded by VerifiedDouble.
+
 0.7.0 - 2014-01-22
 ------------------
 
