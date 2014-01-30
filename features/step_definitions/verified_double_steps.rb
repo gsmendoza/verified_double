@@ -14,6 +14,12 @@ Given /^a test that uses VerifiedDouble to mock the object under test:$/ do |str
   write_file 'spec/main_spec.rb', string
 end
 
+Given("a test that uses both any_instance_of and VerifiedDouble to mock a " +
+  "class:") do |string|
+
+  write_file 'spec/main_spec.rb', string
+end
+
 Given "a test that uses both rspec-mock and VerifiedDouble to partially mock a " +
   "class:" do |string|
 
@@ -74,6 +80,16 @@ Then "I should be informed that only the VerifiedDouble\.wrap mock is " +
   "unverified:" do |string|
 
   assert_partial_output(string, all_output)
+  assert_success('pass')
+end
+
+Then "I should not be informed that the any_instance_of mock is unverified:" do |string|
+  assert_no_partial_output(string, all_output)
+  assert_success('pass')
+end
+
+Then "I should not be informed that the rspec mock is unverified:" do |string|
+  assert_no_partial_output(string, all_output)
   assert_success('pass')
 end
 
