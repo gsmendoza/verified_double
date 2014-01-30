@@ -6,6 +6,7 @@ RSpec.configure do |config|
   end
 
   config.after do
+    VerifiedDouble.registry.current_double = nil
     VerifiedDouble.doubles_in_current_test.clear
   end
 
