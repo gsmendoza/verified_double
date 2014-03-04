@@ -34,16 +34,12 @@ describe VerifiedDouble::ExampleMetadata do
     end
 
     context "where the described class is a string" do
-      let(:metadata) do
-        {
-          example_group: {
-            description_args: [klass.to_s]
-          }
-        }
-      end
+      let(:klass) { Object.to_s }
 
       it "should raise an error" do
-        expect(-> { subject.described_class }).to raise_error
+        expect(-> { subject.described_class }).to raise_error(
+          StandardError, 'VerifiedDouble class description is invalid'
+        )
       end
     end
   end
@@ -54,16 +50,12 @@ describe VerifiedDouble::ExampleMetadata do
     end
 
     context "where there is no description arg that looks like a method signature" do
-      let(:metadata) do
-        {
-          example_group: {
-            description_args: [klass.to_s]
-          }
-        }
-      end
+      let(:method_signature_string) { 'to_s()=>String' }
 
       it "should raise an error" do
-        expect(-> { subject.method_signature_string }).to raise_error
+        expect(-> { subject.method_signature_string }).to raise_error(
+          StandardError, 'VerifiedDouble contract spec description is invalid'
+        )
       end
     end
   end
