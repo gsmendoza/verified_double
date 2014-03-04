@@ -1,3 +1,8 @@
+0.8.1 - 2014-03-04
+------------------
+
+* Better error handling for invalid described_class and method in contract specs.
+
 0.8.0 - 2014-01-30
 ------------------
 
