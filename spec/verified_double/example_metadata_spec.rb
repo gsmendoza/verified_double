@@ -38,8 +38,10 @@ describe VerifiedDouble::ExampleMetadata do
 
       it "should raise an error" do
         expect(-> { subject.described_class }).to raise_error(
-          StandardError, "VerifiedDouble described class 'Object' is invalid.
-            The described class must be a class or a module.".gsub(/\s+/, ' ')
+          StandardError, "The VerifiedDouble contract spec described class
+            'Object' is invalid.
+            The described class must be a class or a module."
+            .gsub(/\s+/, ' ')
         )
       end
     end
@@ -55,8 +57,9 @@ describe VerifiedDouble::ExampleMetadata do
 
       it "should raise an error" do
         expect(-> { subject.method_signature_string }).to raise_error(
-          StandardError, "VerifiedDouble contract spec 'Object' is invalid.
-            The contract spec must start with # or .".gsub(/\s+/, ' ')
+          StandardError, "The VerifiedDouble contract spec method 'Object' is
+            invalid.
+            The method must start with # or .".gsub(/\s+/, ' ')
         )
       end
     end

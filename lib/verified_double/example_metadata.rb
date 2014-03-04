@@ -7,8 +7,9 @@ module VerifiedDouble
         ExampleMetadata.new(metadata[:example_group]).described_class
       else
         raise StandardError,
-          "VerifiedDouble described class '#{description}' is invalid.
-            The described class must be a class or a module.".gsub(/\s+/, ' ')
+          "The VerifiedDouble contract spec described class '#{description}' is
+            invalid. The described class must be a class or a module."
+            .gsub(/\s+/, ' ')
       end
     end
 
@@ -21,8 +22,9 @@ module VerifiedDouble
         description
       elsif metadata[:example_group].nil?
         raise StandardError,
-          "VerifiedDouble contract spec '#{description}' is invalid.
-            The contract spec must start with # or .".gsub(/\s+/, ' ')
+          "The VerifiedDouble contract spec method '#{description}' is invalid.
+            The method must start with # or ."
+            .gsub(/\s+/, ' ')
       else
         ExampleMetadata.new(metadata[:example_group]).method_signature_string
       end
